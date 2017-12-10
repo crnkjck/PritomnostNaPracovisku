@@ -1,0 +1,91 @@
+@import "font-awesome/css/font-awesome.min.css";
+
+html { cursor: default; background-color: #323232; }
+body { margin: 0px; min-width: 500px; background-color: #FFF; font-family: 'Ubuntu', sans-serif; }
+
+a { color: inherit; text-decoration: none; }
+a:hover { text-decoration: none; }
+a:focus { background-color: none !important; }
+
+.spacer { clear: both; }
+.loader { text-align: center; font-size: 25px; margin: 40px 0px; }
+.content { max-width: 1200px; margin: 0px auto; }
+
+.admin_icon { cursor: pointer; }
+
+header { overflow: hidden; background-image: url("../image/header.jpg"); background-color: #191919; height: 200px; background-position: center; background-repeat: no-repeat; }
+header > .content { height: 200px; position: relative; }
+header > div > a { margin: 19px; float: left; }
+header h1 { padding: 17px 0px 0px 0px; margin: 0px; font-size: 25px; color: #FFF; text-transform: uppercase; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
+header h2 { padding: 5px 0px 0px 0px; margin: 0px; font-size: 18px; color: #FFF; text-transform: uppercase; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); font-weight: normal; }
+
+header .login_form { position: absolute; bottom: 10px; right: 10px; }
+header .login_form > input, header .login_form > label { border-radius: 3px; margin: 0px; border: none; box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.5); font-size: 12px; line-height: 26px; }
+header .login_form > input { padding: 0px 6px; }
+header .login_form > label { background-color: #B3231B; color: #FFF; padding: 0px 10px; cursor: pointer; }
+header .login_form > label:hover { background-color: #535250; }
+header .login_form > #login_submit { display: none; }
+
+header .logged_panel { font-size: 0px; position: absolute; bottom: 10px; right: 10px; color: #000; background-color: rgba(255,255,255,0.8); border-radius: 5px; padding: 5px 0px; box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.8);  }
+header .logged_panel > .name { font-weight: bold; padding: 0px 15px; border-right: 1px solid #000; font-size: 14px; }
+header .logged_panel > .name > span { color: #B3231B; padding-left: 5px; }
+header .logged_panel > a > span { font-size: 16px; padding: 0px 15px; }
+header .logged_panel > a:first-of-type > span { border-right: 1px solid #000; }
+
+footer { background-color: #323232; font-size: 12px; color: #FFF; padding: 15px 10px; }
+footer .copyright { float: left; }
+footer .about { color: #FFBD43; float: right; cursor: pointer; }
+
+nav { background-color: #535250; }
+nav ul { padding: 5px 3px; margin: 0px; font-weight: bold; text-transform: uppercase; font-size: 12px; }
+nav ul > li { border-right: 1px solid #CCC; border-left: 1px solid #CCC; color: #FFF; list-style: none; list-style-type: none; float: left; padding: 2px 15px; }
+nav ul > li:first-of-type { border-left: none; }
+nav ul > li:last-of-type { border-right: none; }
+nav ul > li:hover { text-decoration: underline; cursor: pointer; }
+
+.overview { padding: 20px; }
+
+.users_table { width: 300px; float: left; box-shadow: inset 0px 0px 0px 2px rgb(216, 216, 216); }
+.users_table > .title { background-color: #B3231B; color: #FFF; font-size: 16px; font-weight: bold; text-transform: uppercase; padding: 15px 20px; }
+.users_table > .person { padding: 8px 15px; margin: 0px 10px; border-bottom: 1px solid rgb(216, 216, 216); font-size: 12px; color: #444; cursor: pointer; }
+.users_table > .person > span { color: #999; }
+.users_table > .person:last-of-type { border-bottom: none; margin-bottom: 2px; }
+.users_table > .person:hover { background-color: #EEE; }
+
+#overview_table { margin-left: 320px; overflow: hidden; }
+
+#overview_table > .filter { color: #444; font-size: 16px; margin-top: 15px; padding: 0px 10px; }
+#overview_table > .filter > strong { margin-right: 10px; }
+#overview_table > .filter > .fa-times { margin-left: 10px; cursor: pointer; color: #B3231B; }
+
+#overview_table > .title { background-color: #323232; color: #FFF; padding: 20px 25px; text-transform: uppercase; font-size: 18px; font-weight: bold; }
+#overview_table > .title > span { font-size: 14px; padding: 2px 10px; cursor: pointer; }
+#overview_table > .title > span:hover { color: #B3231B; }
+#overview_table > .title > span:first-of-type { margin-left: -10px; }
+#overview_table > .title > span:last-of-type { margin-right: -10px; }
+#overview_table > .box { box-shadow: inset 0px 0px 0px 2px rgb(216, 216, 216); margin: 15px 0px; padding: 0px 10px; font-size: 14px; color: #555; }
+#overview_table > .box > .title { background-color: #535250; color: #FFF; margin: 0px -10px; padding: 10px 15px; text-transform: uppercase; font-size: 16px; font-weight: bold; }
+#overview_table > .box > .holiday { background-color: #B3231B; }
+#overview_table > .box > table { width: 100%; white-space: nowrap; border-spacing: 0px;  }
+#overview_table > .box > table .value { border-bottom: 1px solid rgb(216, 216, 216); }
+#overview_table > .box > table .value > td { padding-top: 8px; }
+#overview_table > .box > table .value > .name { font-weight: bold; width: 99%; padding: 8px 10px 0px 10px; }
+#overview_table > .box > table .value > .name > strong { color: #B3231B; }
+#overview_table > .box > table .value > .name > span { font-size: 13px; color: #B3231B; margin: 0px 5px 0px -5px; width: 15px; }
+#overview_table > .box > table .value > .time { font-weight: bold; padding: 8px 10px; border-bottom: 1px solid rgb(216, 216, 216); }
+#overview_table > .box > table .value > .time > strong { color: #B3231B;  }
+#overview_table > .box > table .value > .type { border-bottom: 1px solid rgb(216, 216, 216); padding: 8px 0px; }
+#overview_table > .box > table .desc > td { color: #777; padding: 0px 15px 8px 15px; font-size: 13px; border-bottom: 1px solid rgb(216, 216, 216); }
+#overview_table > .box > table .desc:last-of-type > td { border-bottom: none; }
+#overview_table > .box > table .value:last-of-type > .time, .time { border-bottom: none; }
+
+.profile { padding: 20px 0px; }
+.profile > div { margin: 10px; }
+.profile > div > span { display: block; font-size: 12px; color: #666; margin-left: -10px; }
+.profile > .name { margin: 0px; background-color: #B3231B; color: #FFF; padding: 15px 20px; text-transform: uppercase; font-size: 16px; font-weight: bold; }
+.profile > div > input[type='text'], .profile > div > input[type='password'] { border-radius: 5px; padding: 4px 8px; margin: 3px 0px; border: none;
+  box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.3); font-size: 15px; color: #333; width: 300px; }
+.profile > div > input[type='text']:focus, .profile > div > input[type='password']:focus { box-shadow: 0px 0px 3px 1px #B3231B; }
+.profile > div > input[type='button'] { background-color: #B3231B; color: #FFF; border: none; border-radius: 5px; padding: 4px 8px;
+  box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.3); margin-left: 10px; }
+.profile > div > input[type='button']:hover { background-color: #535250; cursor: pointer; }
