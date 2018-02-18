@@ -1,37 +1,27 @@
 <?php
-  require 'include/config.php';
-  require 'include/conn.php';
-  require 'class/user.php';
-  $my_account = User::check_login();
-  $users = User::create_all_users();
-  require 'class/overview.php';
-  require 'include/header.php';
-?>
 
-<div class='content overview'>
+require 'include/config.php';
 
-  <div class='users_table'>
-    <div class='title'>Prehľad vyučujúcich</div>
-    <?php
-      foreach ( $users as $u ) {
-        if ( $u->status > 0 ) {
-          $p_id = ""; if ( $my_account->super_user or $my_account->admin ) $p_id = " <span>#" . $u->personal_id . "</span>";
-          echo "<div class='person person$u->id' onclick='slide_overview(0, $u->id);'>" . $u->get_full_name(1) . "$p_id</div>";
-        }
-      }
-    ?>
-  </div>
+require 'class/user.php';
+require 'class/overview.php';
 
-  <div id='overview_table'>
-    <?php
-      $overview = new Overview($actual_year, $actual_month);
-      echo $overview->run();
-    ?>
-  </div>
+require 'template/main_template.php';
+require 'template/index.php';
+require "template/overview.php";
 
-  <div class='spacer'></div>
-</div>
+$my_account = User::login();
+$users = User::create_all_users();
 
-<?php
-  require 'include/footer.php';
+$persons = "";
+
+foreach ( $users as $u ) {
+  if ( $u->status > 0 ) {
+    $p_id = "";
+    if ( $my_account->super_user or $my_account->admin ) $p_id = "#" . $u->personal_id;
+    $persons .= print_index_person ( $u->id, $u->name, $u->surname, $p_id );
+  }
+}
+
+echo print_header() . print_index( $persons, $actual_year, $actual_month) . print_footer();
+
 ?>

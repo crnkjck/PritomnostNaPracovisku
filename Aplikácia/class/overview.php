@@ -1,121 +1,110 @@
 <?php
+require 'day.php';
 
 class Overview {
   var $days = [];
   var $y, $m, $last_d;
   var $user_id = 0;
 
+  // ak posles user_id, ukaze to overview iba pre daneho usera
   function __construct($y, $m, $user_id = 0) {
-    $this->user_id = $user_id;
-    $this->y = $y;
-    $this->m = $m;
-    $this->last_d = date("t", strtotime("$y-$m-1"));;
-
+    $this->user_id = intval( $user_id );
+    $this->y = intval( $y );
+    $this->m = intval( $m );
+    $this->last_d = date("t", strtotime("$this->y-$this->m-1"));
     $this->get_dates();
   }
 
+  // nacitaj vsetky udalosti
   function get_dates() {
-    global $conn;
+    global $conn, $my_account;
 
     $user_sql = "";
     if ( $this->user_id > 0 ) $user_sql = "user_id = '$this->user_id' AND";
 
-    $dates = $conn->query("SELECT * FROM absence WHERE $user_sql public > 0 AND date_time >= '$this->y-$this->m-1' AND date_time <= '$this->y-$this->m-$this->last_d' ORDER BY date_time");
-    $holidays = $conn->query("SELECT * FROM holidays WHERE date_time >= '$this->y-$this->m-1' AND date_time <= '$this->y-$this->m-$this->last_d' ORDER BY date_time");
+    $absences = $conn->query("SELECT id, DAY(date_time) as day, user_id,
+                              (SELECT u.status FROM users AS u WHERE u.id = user_id) AS user_status FROM absence
+                              WHERE $user_sql YEAR(date_time) = '$this->y' AND MONTH(date_time) = '$this->m'
+                              HAVING user_status > 0 ORDER BY date_time");
 
-    while ( $d = $dates->fetch_assoc() ) {
-        $x = intval( date("j", strtotime($d["date_time"])) );
-        if ( !isset( $this->days[$x] ) ) $this->days[$x] = [];
-        array_push( $this->days[$x],
-          [ "user_id" => $d['user_id'], "from" => $d['from_time'], "to" => $d['to_time'], "desc" => $d['description'], "type" => $d['type'] ]
-        );
-    }
+    $holidays = $conn->query("SELECT DAY(date_time) as day, description FROM holidays
+                              WHERE MONTH(date_time) = '$this->m' AND YEAR(date_time) = '$this->y' ORDER BY date_time");
 
-    while ( $d = $holidays->fetch_assoc() ) {
-        $x = intval( date("j", strtotime($d["date_time"])) );
-        $this->days[$x] = [
-          [ "user_id" => 0, "from" => null, "to" => null, "desc" => $d['description'], "type" => 0 ]
-        ];
+    while ( $h = $holidays->fetch_assoc() ) $this->days[ $h["day"] ] = $h["description"];
+
+    while ( $a = $absences->fetch_assoc() ) {
+        $day = new Day( $a["day"], $this->m, $this->y, $a["user_id"] );
+
+        if ( $day->public == 1 || $my_account->status > 0 ) {
+          if ( !isset( $this->days[ $a["day"] ] ) )
+            $this->days[ $a["day"] ] = [];
+
+          if ( is_array($this->days[ $a["day"] ]) )
+            array_push( $this->days[ $a["day"] ], $day);
+        }
     }
 
     ksort($this->days);
   }
 
-  function run() {
-    global $sk_months;
-    global $sk_types;
-    global $users;
+  function run( $title = 1 ) {
+    global $sk_months, $sk_types, $sk_subtypes, $users, $my_account;
+    $str = "";
 
-    $str = "<div class='title'>
-      <span class='fa fa-chevron-left' onclick='slide_overview(-1);'></span>
-      " . $sk_months[ $this->m ] . " $this->y
-      <span class='fa fa-chevron-right' onclick='slide_overview(1);'></span>
-    </div>" . $this->overview_name();
+    // zobrazit titulok s posuvacom mesiacov ??
+    if ( $title ) {
+      list($year_minus, $month_minus) = month_minus($this->y, $this->m);
+      list($year_plus, $month_plus) = month_plus($this->y, $this->m);
+      // vypis nazvu mesiaca a sipok
+      $str .= print_overview_title( $sk_months[ $this->m ], $this->y, $year_minus, $month_minus, $year_plus, $month_plus);
+      // vypis mena ak je zapnuty filter
+      if ( $this->user_id != 0 )
+        $str .= print_overview_filter ( $users[$this->user_id]->name, $users[$this->user_id]->surname );
+    }
 
-    foreach ( $this->days as $d => $values ) {
-      $str .= "<div class='box box$this->y-$this->m-$d'>
-        <div class='title " . $this->is_holiday( $values[0]["user_id"] ) . "'>$d. " . $sk_months[ $this->m ] . " $this->y</div>
-        <table><tbody>";
+    $str2 = "";
+    // vypis obsahu overview (vsetkych boxov)
+    foreach ( $this->days as $day => $absences ) {
+      // ak ej to string, tak je to sviatok/volno
+      if ( is_string( $absences ) ) {
+        $vals =  print_overview_box_value( 0, "", $absences );
+        $str2 .= print_overview_box ( $sk_months[ $this->m ], $this->y, $day, "holiday", $vals );
+      }
+      else{
+        $vals = "";
 
-      foreach ( $values as $v ) {
-        $str .= "
-          <tr class='value value$v[user_id]'>
-            <td class='name'>" . $this->display_name( $v["user_id"], $d, $v["desc"] ). "</td>
-            <td class='type' rowspan='2'>" . $sk_types[ $v["type"] ] . "</td>
-            <td class='time' rowspan='2'>" . $this->display_time( $v["from"], $v["to"] ) . "</td>
-          </tr>
-          <tr class='desc'><td>$v[desc]</td></tr>";
+        foreach ( $absences as $a ) {
+          // zobraz iba schvalen (alebo moje alebo admin)
+          if ( $a->confirmation || $my_account->id == $a->user_id || $my_account->super_user || $my_account->request_validator ) {
+            $state = "";
+            if ( !$a->confirmation ) $state = " <strong>(zatiaľ neschválené)</strong>";
+
+            $vals .=  print_overview_box_value(
+              $a->absence_id,
+              $this->remove_button( $a, $users[ $a->user_id ]->name, $users[ $a->user_id ]->surname ),
+              $users[ $a->user_id ]->name . $state,
+              $users[ $a->user_id ]->surname,
+              $sk_types[ $a->type ],
+              display_time( $a->from_time, $a->to_time ),
+              $a->description
+            );
+          }
         }
-      $str .= "</tbody></table></div>";
+        // ak nieje co zobrazit tak nevykresluj box
+        if ( $vals ) $str2 .= print_overview_box ( $sk_months[ $this->m ], $this->y, $day, "", $vals );
+      }
     }
-
-    return $str;
+    if ( !$str2 ) $str2 = print_overview_box ( "", "", "Žiadne záznamy ..", "", "" );
+    return $str . $str2;
   }
 
-  function is_holiday( $value ) {
-    if ( isset( $value ) and $value == 0  ) return "holiday";
-    return "";
-  }
-
-  function display_time( $from, $to ) {
-    if ( !$from or !$to ) return "";
-    $t1 = date( "H:i", strtotime($from) );
-    $t2 = date( "H:i", strtotime($to) );
-    if ( $t1 != "08:00" and $t2 != "16:00" ) return "<strong>$t1 - $t2</strong>";
-    return "Celý deň";
-  }
-
-  function overview_name() {
-    global $users;
-
-    if ( $this->user_id != 0 ) {
-      return "<div class='filter'>
-        <strong>Filter:</strong>
-        " . $users[$this->user_id]->get_full_name() . "
-        <span class='fa fa-times' onclick='slide_overview(0,-1);'></span>
-      </div>";
-    }
-    return "";
-  }
-
-  function display_name( $u_id, $d ) {
-    if ( !$u_id ) return "";
-
+  // button na odstranenie nepritomnosti priamo z overview
+  function remove_button( $a, $name, $surname ) {
     global $my_account;
-    global $actual_year;
-    global $actual_month;
-    global $actual_day;
-    global $users;
-
-    $str = "<span onclick='remove_record($u_id, \"$this->y-$this->m-$d\", \"" . $users[$u_id]->get_full_name() . "\");' class='fa fa-times admin_icon'></span>";
-
-    if ( $my_account->super_user or $my_account->admin ) return $str . $users[ $u_id ]->get_full_name();
-    if ( $u_id != $my_account->id ) $str = "";
-    if ( $actual_year == $this->y and $actual_month == $this->m and $actual_day > 20 ) $str = "";
-    if ( $actual_year == $this->y and $actual_month > $this->m ) $str = "";
-    if ( $actual_year > $this->y ) $str = "";
-
-    return $str . $users[ $u_id ]->get_full_name();
+    // button ukaz iba pri mojich udalostiach (alebo admin)
+    if ( ($my_account->id == $a->user_id || $my_account->super_user) && edit_date( $a->year, $a->month, $a->type ) )
+      return print_overview_box_value_remove ( $this->y, $this->m, $name, $surname, $a->absence_id );
+    return "";
   }
 }
 

@@ -1,19 +1,16 @@
 <?php
-  require 'include/config.php';
-  require 'include/conn.php';
-  require 'class/user.php';
-  $my_account = User::check_login();
-  $users = User::create_all_users();
+require 'include/config.php';
 
-  require 'include/header.php';
-?>
+require 'class/user.php';
 
-<div class='content'>
+require 'template/main_template.php';
+require 'template/calendar.php';
 
-  <div class='spacer'></div>
+$my_account = User::login(1);
 
-</div>
+$year = get_year();
+$month = get_month();
 
-<?php
-  require 'include/footer.php';
+echo print_header() . print_calendar($year, $month) . print_footer();
+
 ?>
