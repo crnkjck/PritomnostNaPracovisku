@@ -29,15 +29,15 @@ function print_calendar_holidays ( $data ) {
   ";
 }
 
-function print_calendar_overview ($year, $month, $id) {
+function print_calendar_overview ($year, $month, $id, $personal_id = 0) {
   return "
-  <div id='overview_table'> <script>slide_overview($year, $month, $id, 0);</script> </div>
+  <div id='overview_table'> <script>slide_overview($year, $month, $id, 0, $personal_id);</script> </div>
   <div class='spacer'></div>
   ";
 }
 
-function print_calendar_inserted_script ($year, $month) {
-  return "<script> reload_calndar($year, $month); </script>";
+function print_calendar_inserted_script ($year, $month, $personal_id) {
+  return "<script> reload_calndar($year, $month, $personal_id); </script>";
 }
 
 function print_calendar_set_form_days ( $date, $name ) {
@@ -65,7 +65,7 @@ function print_calendar_set_form_types ( $key, $value, $checked = "" ) {
   return "<label><input type='radio' name='c_type' value='$key' onchange='show_subtypes();' $checked><span>$value</span></label>";
 }
 
-function print_calendar_set_form ( $count, $days, $single, $year, $month, $date1, $date2, $types ) {
+function print_calendar_set_form ( $count, $days, $single, $year, $month, $date1, $date2, $types, $personal_id, $admin_str ) {
   return "
   <div class='title_1'>Pridať absenciu</div>
   Počet vybraných dní: $count<br>
@@ -89,7 +89,7 @@ function print_calendar_set_form ( $count, $days, $single, $year, $month, $date1
   <input class='input_text' type='text' name='c_description' placeholder='nepovinné'>
   <div class='spacer'></div>
 
-  <div class='button_submit add_absence' onclick='calendar_set($year, $month, $date1, $date2);'>Potvrdiť</div>
+  <div class='button_submit add_absence' onclick='calendar_set($year, $month, $date1, $date2, $personal_id);'>Potvrdiť</div> $admin_str
   ";
 }
 
@@ -112,13 +112,15 @@ function print_calendar_holiday_script ( $spend ) {
   return "<script>$('#holiday_spend').html('$spend');</script>";
 }
 
-function print_calendar_table($y, $m, $yL, $mL, $yR, $mR, $data){
+function print_calendar_table($y, $m, $yL, $mL, $yR, $mR, $data, $personal_id, $admin_str){
   global $sk_months;
 
   return "
   <div class='title_1'>
     Kalendár
   </div>
+
+  $admin_str
 
   <table id='calendar_table'>
 
@@ -135,8 +137,8 @@ function print_calendar_table($y, $m, $yL, $mL, $yR, $mR, $data){
 
   <div class='buttons'>
     <div class='button_submit' id='empty_add'>Vyberte deň alebo rozmedzie</div>
-    <div class='button_submit hidden' id='single_add' onclick='calendar_add($y, $m);'>Pridať neúčasť pre deň</div>
-    <div class='button_submit hidden' id='multiple_add' onclick='calendar_add($y, $m);'>Pridať neúčasť pre rozmedzie</div>
+    <div class='button_submit hidden' id='single_add' onclick='calendar_add($y, $m, $personal_id);'>Pridať neúčasť pre deň</div>
+    <div class='button_submit hidden' id='multiple_add' onclick='calendar_add($y, $m, $personal_id);'>Pridať neúčasť pre rozmedzie</div>
   </div>
 
   <div class='spacer'></div>

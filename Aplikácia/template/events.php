@@ -16,7 +16,7 @@ function print_events( $year, $year_minus, $year_plus ) {
     <div class='add'>
       <div class='title'>Pridať udalosť pre rok $year</div>
       Popis: <input type='text' name='description' placeholder='Zadajte popis udalosti'><br>
-      Dátum: <input type='text' name='day' placeholder='dd'> . <input type='text' name='month' placeholder='mm'> . 2018
+      Dátum: <input type='text' name='day' placeholder='dd'> . <input type='text' name='month' placeholder='mm'> . $year
       <div class='info'><span class='fa fa-info-circle'></span> Všetky záznamy pridané používateľmi pre tento deň budú odstránené.</div>
       <div class='button_submit' onclick='event_add($year);'>Pridať</div>
     </div>

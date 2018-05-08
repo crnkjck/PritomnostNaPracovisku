@@ -1,3 +1,20 @@
+function reset_pass( x ) {
+  if ( x == 1 ) {
+    $("#lost_pass_form").toggle();
+  }
+  if ( x == 2 ) {
+    var email = $("#lost_password").val();
+    $.post( 'ajax/reset_pass.php', { email: email })
+      .done(function( data ) {
+        $('#lost_pass_form').html(data);
+      });
+  }
+}
+
+function user_switch( y, m, personal_id ) {
+  reload_calndar(y, m, personal_id.value);
+}
+
 function terms_set( year ) {
   var m1 = $("input[name='m1']").val();
   var m2 = $("input[name='m2']").val();
@@ -18,8 +35,8 @@ function terms_set( year ) {
     });
 }
 
-function calendar_add( year, month ) {
-  $.post( 'ajax/calendar_set.php?year=' + year + '&month=' + month, { d1: date1, d2: date2 })
+function calendar_add( year, month, personal_id = 0 ) {
+  $.post( 'ajax/calendar_set.php?year=' + year + '&month=' + month, { d1: date1, d2: date2, personal_id: personal_id })
     .done(function( data ) {
       $('#calendar').html(data);
     });
@@ -56,7 +73,7 @@ function calendar_click( n ) {
 
 }
 
-function calendar_set(y, m, date1, date2) {
+function calendar_set(y, m, date1, date2, personal_id = 0) {
   var time_type = $("input[name='c_time_type']:checked").val();
   var from_h = $("input[name='c_from_h']").val();
   var from_m = $("input[name='c_from_m']").val();
@@ -76,7 +93,8 @@ function calendar_set(y, m, date1, date2) {
       to_m: to_m,
       is_public: is_public,
       type: type,
-      description: description
+      description: description,
+      personal_id: personal_id
     })
     .done(function( data ) { $('#calendar').html(data); }
   );
@@ -198,10 +216,12 @@ function show( input, value, output ) {
   }
 }
 
-function reload_calndar(y, m) {
+function reload_calndar(y, m, personal_id = 0) {
   if ( $("#calendar")[0] )
     $("#calendar").html("<div class='loader'><span class='fa fa-spinner fa-pulse fa-3x fa-fw'></span></div>");
-    setTimeout( function() { $("#calendar").load("ajax/calendar_load.php?year="+y+"&month="+m); }, 500);
+    var id = "";
+    if ( personal_id > 0 ) id = "&personal_id=" + personal_id;
+    $("#calendar").load("ajax/calendar_load.php?year="+y+"&month="+m+id);
 };
 
 function overview_set_user ( id ) {
@@ -212,7 +232,7 @@ function overview_set_user ( id ) {
   slide_overview( y, m, user_id, 1 );
 }
 
-function slide_overview( year, month, id = 0, title = 1 ) {
+function slide_overview( year, month, id = 0, title = 1, personal_id = 0 ) {
   if ( id != 0 ) user_id = id;
   y = year;
   m = month;
@@ -221,7 +241,7 @@ function slide_overview( year, month, id = 0, title = 1 ) {
   if (user_id != 0) $("#person_"+user_id).css("background-color", "#DBD8D8");
 
   $("#overview_table").html("<div class='title'>Počkajte prosím...</div><div class='loader'><span class='fa fa-spinner fa-pulse fa-3x fa-fw'></span></div>");
-  $("#overview_table").load("ajax/overview_load.php?year=" + year + "&month=" + month + "&p_id=" + user_id + "&title=" + title);
+  $("#overview_table").load("ajax/overview_load.php?year=" + year + "&month=" + month + "&p_id=" + user_id + "&title=" + title + "&personal_id=" + personal_id);
 }
 
 function overview_remove_value( id, full_name ) {
