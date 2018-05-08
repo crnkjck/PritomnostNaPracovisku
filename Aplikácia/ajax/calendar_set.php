@@ -7,11 +7,24 @@ require '../template/calendar.php';
 
 // kontrola statusu prihláseného používateľa
 $my_account = User::login(1);
-$id = $my_account->id;
+$personal_id = $my_account->id;
+$user = $my_account;
+
+// pridavanie zapisu pre niekoho ineho (ak si sekretar)
+if ( post(["personal_id"]) && $my_account->status == 2 && intval(post("personal_id")) > 0 ) {
+  $personal_id = intval( post("personal_id") );
+  $user = User::get( $personal_id );
+}
 
 // nastav rok a mesiac ( ak su neplatne nastavi aktualny rok a masiac )
 $year = get_year();
 $month = get_month();
+
+// SEKRETARIAT moze pridavat aj za ostatnich
+$admin_str = "";
+if ( $my_account->status == 2 ) {
+  $admin_str = "Pridávate údaje pre používateľa: <b>$user->surname $user->name</b>";
+}
 
 // prvý a posledný deň vybraného časového rozmedzia
 if ( post(["d1", "d2"]) ) {
@@ -35,7 +48,7 @@ else exit();
 // načíta všetky voľné dni z časového rozmedzia ( ak niesu dovolenka alebo víkend alebo ani obsadené inou neprítomnosťou )
 $days = [];
 for ( $i = $date1; $i <= $date2; $i++ ) {
-  $day = new Day($i, $month, $year, $id);
+  $day = new Day($i, $month, $year, $user->id);
   if ( $day->type == 0 && $day->day_of_week <= 5 && $day->holiday == "" )
     array_push($days, $day);
 }
@@ -63,7 +76,7 @@ if ( post(["is_public", "type", "description"]) ) {
   }
 
   // skontroluje deadline
-  if ( !edit_date( $year, $month, $type ) ){
+  if ( !edit_date( $year, $month, $type ) && $my_account->status != 2 ){
     echo message( "error", "<b>Chyba</b><br>Čas pre pridávanie / editovanie zvolenej absencie už vypršal." );
   }
   // ak je to dovolenka, skontroluje či má dostatok volnej dovolenky
@@ -76,7 +89,7 @@ if ( post(["is_public", "type", "description"]) ) {
       $result = $d->set( $type, $public, $description, $from_time, $to_time );
       if ( $result ) $d->insert();
     }
-    echo print_calendar_inserted_script ($year, $month);
+    echo print_calendar_inserted_script ($year, $month, $user->personal_id);
   }
 }
 // ak nebol vyplnený formulár, tak ho vygenerej
@@ -97,6 +110,6 @@ else {
     $types_str .= print_calendar_set_form_types ( $key, $value, $ch );
   }
 
-  echo print_calendar_set_form ( count($days), $days_str, $single, $year, $month, $date1, $date2, $types_str );
+  echo print_calendar_set_form ( count($days), $days_str, $single, $year, $month, $date1, $date2, $types_str, $user->personal_id, $admin_str );
 }
 ?>

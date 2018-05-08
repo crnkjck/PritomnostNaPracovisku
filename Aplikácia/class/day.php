@@ -73,7 +73,7 @@ class Day {
     if ( $this->type || $this->holiday ) return false;
     if ( strtotime("$this->date $from_time") > strtotime("$this->date $to_time") ) return false;
     if ( $type <= 0 || $type > sizeof($sk_types) ) return false;
-    if ( !edit_date( $this->year, $this->month, $type ) ) return false;
+    if ( !edit_date( $this->year, $this->month, $type ) && $my_account->status != 2 ) return false;
 
     $this->confirmation = 1;
     if ( $type == 2 || $type == 4 ) $this->confirmation = 0;
@@ -103,7 +103,7 @@ class Day {
         $email = $validator->email;
         $headers  = 'MIME-Version: 1.0' . "\r\n";
         $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
-        $headers .= 'From: noreply@uniba.sk' . "\r\n";
+        $headers .= 'From: noreply@pritomnost.dai.fmph.uniba.sk' . "\r\n";
         $text = "Nová žiadosť na schválenie. <br> Typ: " . $sk_types[$this->type] . " <br> Dátum: " . sk_format_date($this->date) .
                 "<br> Pre schválenie pokračujte na adresu: <a href='$main_url/requests.php'>$main_url/requests.php</a>";
         mail($email, "DOCHÁDZKY (" . sk_format_date($this->date) . ")", $text, $headers);

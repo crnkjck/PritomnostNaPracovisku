@@ -64,12 +64,17 @@ header > div > a { margin: 19px; float: left; }
 header h1 { padding: 17px 0px 0px 0px; margin: 0px; font-size: 25px; color: #FFF; text-transform: uppercase; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
 header h2 { padding: 5px 0px 0px 0px; margin: 0px; font-size: 18px; color: #FFF; text-transform: uppercase; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); font-weight: normal; }
 
-header .login_form { text-align: right; font-size: 13px; }
-header .login_form > input, header .login_form > label { border-radius: 3px; border: none; font-size: 12px; }
-header .login_form > input { margin: 0px 10px; padding: 3px 6px; }
-header .login_form > label { background-color: #B3231B; color: #FFF; padding: 6px 10px; cursor: pointer; }
-header .login_form > label:hover { background-color: #535250; }
-header .login_form > #login_submit { display: none; }
+header .login_form { text-align: right; font-size: 13px; position: relative; }
+header .login_form  input, header .login_form  label { border-radius: 3px; border: none; font-size: 12px; }
+header .login_form  input { margin: 0px 10px; padding: 3px 6px; }
+header .login_form  label { background-color: #B3231B; color: #FFF; padding: 6px 10px; cursor: pointer; }
+header .login_form  label:hover { background-color: #535250; }
+header .login_form  input[type='submit'], header .login_form  input[type='button'] { display: none; }
+
+.lost_pass { position: absolute; margin-top: 35px; right: 0px; color: #B3231B; font-size: 13px; z-index: 100; font-weight: bold; }
+.lost_pass:hover { text-decoration: underline; }
+
+#lost_pass_form { color: #FFF; position: absolute; margin-top: 60px; right: 0px; z-index: 100; background-color: rgba(0,0,0,0.5); padding: 10px; border-radius: 10px; display: none; }
 
 header .logged_panel { font-weight: bold; text-align: right;  }
 header .logged_panel > * { border-right: 1px solid #FFF; }

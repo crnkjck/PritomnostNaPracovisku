@@ -42,9 +42,9 @@ function print_overview_box_value ( $id, $remove_button, $name, $surname = "", $
   ";
 }
 
-function print_overview_box_value_remove ( $y, $m, $name, $surname, $absence_id ) {
+function print_overview_box_value_remove ( $y, $m, $name, $surname, $absence_id, $personal_id = 0 ) {
   return "
-    <span onclick='overview_remove_value( $absence_id, \"$name $surname\"); reload_calndar($y, $m);' class='fa fa-times admin_icon'></span>
+    <span onclick='overview_remove_value( $absence_id, \"$name $surname\"); reload_calndar($y, $m, $personal_id);' class='fa fa-times admin_icon'></span>
   ";
 
 }

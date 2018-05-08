@@ -14,6 +14,12 @@ function print_header_logged_on ( $name, $surname, $id, $holidays_spend, $holida
 function print_header_logged_off() {
   return "
   <form class='login_form' method='POST'>
+    <span class='lost_pass' onclick='reset_pass(1);'>Zabudnuté heslo?</span>
+    <div id='lost_pass_form'>
+      Email: <input type='text' id='lost_password' placeholder='Email'>
+      <label for='reset_pass' onclick='reset_pass(2);' class='fa fa-sign-in'></label>
+      <input id='reset_pass' type='button'>
+    </div>
     Prihlasovacie meno: <input name='login_username' type='text' placeholder='Prihlasovacie meno'>
     Heslo: <input name='login_password' type='password' placeholder='Heslo'>
     <label for='login_submit' class='fa fa-sign-in'></label>

@@ -5,10 +5,12 @@ class Overview {
   var $days = [];
   var $y, $m, $last_d;
   var $user_id = 0;
+  var $personal_id = 0;
 
   // ak posles user_id, ukaze to overview iba pre daneho usera
-  function __construct($y, $m, $user_id = 0) {
+  function __construct($y, $m, $user_id = 0, $personal_id = 0) {
     $this->user_id = intval( $user_id );
+    $this->personal_id = intval( $personal_id );
     $this->y = intval( $y );
     $this->m = intval( $m );
     $this->last_d = date("t", strtotime("$this->y-$this->m-1"));
@@ -101,9 +103,10 @@ class Overview {
   // button na odstranenie nepritomnosti priamo z overview
   function remove_button( $a, $name, $surname ) {
     global $my_account;
+
     // button ukaz iba pri mojich udalostiach (alebo admin)
-    if ( ($my_account->id == $a->user_id || $my_account->super_user) && edit_date( $a->year, $a->month, $a->type ) )
-      return print_overview_box_value_remove ( $this->y, $this->m, $name, $surname, $a->absence_id );
+    if ( ($my_account->id == $a->user_id || $my_account->super_user) && (edit_date( $a->year, $a->month, $a->type ) || $my_account->status == 2) )
+      return print_overview_box_value_remove ( $this->y, $this->m, $name, $surname, $a->absence_id, $this->personal_id );
     return "";
   }
 }

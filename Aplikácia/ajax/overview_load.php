@@ -23,8 +23,12 @@ else $pid = 0;
 if ( get(["title"]) ) $title = intval( get("title") );
 else $title = 1;
 
+// ak je nastavene personal ID 2 ... kvoli refresom v kalendari
+if ( get(["personal_id"]) ) $personal_id = intval( get("personal_id") );
+else $personal_id = 0;
+
 // vytvor nahlad
-$overview = new Overview($year, $month, $pid);
+$overview = new Overview($year, $month, $pid, $personal_id);
 
 // vykresli nahlad
 echo $overview->run( $title );
