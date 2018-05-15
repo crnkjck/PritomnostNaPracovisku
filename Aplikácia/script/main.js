@@ -1,4 +1,4 @@
-function reset_pass( x ) {
+function resetpass( x ) {
   if ( x == 1 ) {
     $("#lost_pass_form").toggle();
   }
