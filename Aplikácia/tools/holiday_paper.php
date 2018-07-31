@@ -24,39 +24,37 @@ else exit();
 
   <body>
 
+    <h1>DOVOLENKA</h1>
+
     <table>
 
       <tr>
-        <td style="text-align: center; font-size: 24px; font-weight: bold;" colspan="8">DOVOLENKA</td>
-      </tr>
-
-      <tr>
-        <td>Priezvisko,<br> meno</td>
-        <td class="tC B" colspan="3"><?php echo "$surname $name"; ?></td>
+        <td>Priezvisko, meno</td>
+        <td class="tC B tVal" colspan="3"><?php echo "$surname $name"; ?></td>
         <td>Osobné číslo</td>
-        <td class="tC B" colspan="3"><?php echo $pesonal_id; ?></td>
+        <td class="tC B tVal" colspan="3"><?php echo $pesonal_id; ?></td>
       </tr>
 
       <tr>
         <td>Útvar</td>
-        <td colspan="3"></td>
+        <td class="tC tVal" colspan="3">Katedra aplikovanej informatiky</td>
         <td>Číslo útvaru</td>
         <td colspan="3"></td>
       </tr>
 
       <tr>
-        <td colspan="4">žiada o dovolenku na zotavenie za kalendárny rok:</td>
+        <td colspan="4">žiada o dovolenku na zotavenie za kalendárny rok</td>
         <td colspan="4"></td>
       </tr>
 
       <tr>
-        <td class="tR" style="width: 180px;">od:</td>
-        <td class="tC B" style="width: 240px;"><?php echo $from_time; ?></td>
-        <td class="tR" style="width: 90px;">do:</td>
-        <td class="tC B" style="width: 210px;"><?php echo $to_time; ?></td>
-        <td style="width: 210px;">vrátane t.j</td>
-        <td class="tC B" style="width: 90px;"><?php echo $num_of_days; ?></td>
-        <td style="width: 210px;" colspan="2">pracovných dní</td>
+        <td class="cw2 tR">od</td>
+        <td class="cw2 tC B tVal"><?php echo $from_time; ?></td>
+        <td class="cw1 tR">do</td>
+        <td class="cw2 tC B tVal"><?php echo $to_time; ?></td>
+        <td class="cw2">vrátane t.j.</td>
+        <td class="cw1 tC B tVal"><?php echo $num_of_days; ?></td>
+        <td class="cw2" colspan="2">pracovných dní.</td>
       </tr>
 
       <tr>
@@ -71,16 +69,16 @@ else exit();
       </tr>
 
       <tr>
-        <td class="tC rBT rBR" colspan="2">dátum</td>
+        <td class="tC rBT rBR" colspan="2">Dátum</td>
         <td class="rBL rBR rBT" colspan="2"></td>
-        <td class="tC rBT rBL" colspan="4">podpis pracovníka</td>
+        <td class="tC rBT rBL" colspan="4">Podpis pracovníka</td>
       </tr>
 
       <tr>
         <td colspan="3"></td>
         <td>Dátum</td>
         <td>Ved. útvaru</td>
-        <td colspan="3">Personál. útvaru</td>
+        <td colspan="3">Pers. útvar</td>
       </tr>
 
       <tr>
@@ -105,16 +103,25 @@ else exit();
       </tr>
 
       <tr>
-        <td colspan="2">Z tejto dovolenky sa skutočne čerpalo</td>
-        <td class="rBR" colspan="3"></td>
-        <td class="rBL" colspan="3">pracovných dní</td>
+        <td class="rBR" colspan="2">Z tejto dovolenky sa skutočne čerpalo</td>
+        <td class="rBL rBR" colspan="2"><span class="dotfill"></span></td>
+        <td class="rBL" colspan="4">pracovných dní.</td>
       </tr>
 
 
     </table>
     <style>
-      table { width: 1230px; border-collapse: collapse; }
-      td { border: 1px solid black; padding: 10px 10px; }
+      body { font-size: 10pt; font-family: Helvetica, Arial, sans-serif; }
+      h1, table { min-width: 15cm; max-width: 19cm; }
+      h1, .h1 { font-size: 200%; font-weight: bold; text-align: center; letter-spacing: .2em; margin: 0; padding: 5pt; }
+      table { border-collapse: collapse; box-sizing: border-box; border: 1.2pt solid black; }
+      @media print {
+      	h1, table { width: 100%; margin: 0 auto; }
+      }
+      td { border: .4pt solid black; padding: 5pt 5pt; }
+
+      .cw1 { width: 8.33333%; }
+      .cw2 { width: 16.66667%; }
 
       .tC { text-align: center; }
       .tR { text-align: right; }
@@ -124,7 +131,11 @@ else exit();
       .rBR { border-right: none; }
       .rBL { border-left: none; }
 
-      .pt30 { padding-top: 30px; }
+      .tVal { font-family: Times, "Times New Roman", serif; }
+
+      .pt30 { padding-top: 1cm; }
+
+      .dotfill { display: inline-block; border-bottom: 1.33333pt dotted black; width: 100%; height: 1.2em; }
 
       .B { font-weight: bold; font-size: 18px; }
 
