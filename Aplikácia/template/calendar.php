@@ -67,11 +67,11 @@ function print_calendar_set_form_types ( $key, $value, $checked = "" ) {
 
 function print_calendar_set_form ( $count, $days, $single, $year, $month, $date1, $date2, $types, $personal_id, $admin_str ) {
   return "
-  <div class='title_1'>Pridať absenciu</div>
+  <div class='title_1'>Pridať neprítomnosť</div>
   Počet vybraných dní: $count<br>
   $days
   $single
-  <div class='input_title'>Verejné zverejnenie</div>
+  <div class='input_title'>Zverejnenie</div>
 
   <div class='input_value'>
     <label><input type='radio' name='c_public' value='1' checked><span>Zverejniť</span></label>

@@ -14,7 +14,7 @@ function print_index( $persons, $y, $m ) {
   return "
   <div class='content' id='overview'>
 
-    ".message( "info", "<b>V tomto mesiaci môžete svoju absenciu pridávať / editovať do $deadline. dňa.</b> <br> Vzťahuje sa na 'Práceneschopnosť' a 'Dovolenka'. Ostatné do konca mesiaca." )."
+    ".message( "info", "<b>V tomto mesiaci môžete svoju dovolenku a&nbsp;práceneschopnosť pridávať a&nbsp;editovať do $deadline. dňa.</b> <br> Po tomto dni sa obráťte na pani sekretárku. Neprítomnosť z&nbsp; ostatných dôvodov je možné zadávať do konca mesiaca." )."
 
     <div class='side_table'>
       <div class='title'>Prehľad zamestnancov</div>
