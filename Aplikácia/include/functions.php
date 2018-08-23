@@ -109,7 +109,7 @@ function edit_date( $y, $m, $type ) {
 
   if ( $actual_year < $y ) return true;
   if ( $actual_year == $y && $m > $actual_month ) return true;
-  if ( ($actual_year == $y && $m == $actual_month) && (!$protection || $actual_day < $deadline) ) return true;
+  if ( ($actual_year == $y && $m == $actual_month) && (!$protection || $actual_day <= $deadline) ) return true;
   return false;
 }
 
