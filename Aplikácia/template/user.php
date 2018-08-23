@@ -39,8 +39,8 @@ function print_user_add ( $id, $personal_id, $name, $surname, $email, $username,
       </div>
 
       <div>
-        <span>Priezvysko</span>
-        <input name='surname' type='text' placeholder='Zadajte priezvysko' value='$surname'>
+        <span>Priezvisko</span>
+        <input name='surname' type='text' placeholder='Zadajte priezvisko' value='$surname'>
       </div>
 
       <div>

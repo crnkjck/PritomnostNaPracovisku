@@ -37,7 +37,7 @@ function print_header() {
   $m2 = "";
   $m3 = "";
   $m4 = "";
-  if ( $my_account->status > 0 ) $m2 = "<li><a href='calendar.php'>Prítomnosť na pracovisku</a></li>";
+  if ( $my_account->status > 0 ) $m2 = "<li><a href='calendar.php'>Vaša neprítomnosť</a></li>";
   if ( $my_account->status >= 2 ) $m3 = "
     <li><a href='users.php'>Používatelia</a></li>
     <li><a href='terms.php'>Termíny</a></li>
