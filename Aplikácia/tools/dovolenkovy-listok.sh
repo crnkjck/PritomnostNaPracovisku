@@ -10,7 +10,7 @@ scriptname="$(basename -- "$0")"
 
 declare -a params
 params=(printer_host printer jobname)
-texparams=(priezviskomeno osobnecislo utvar cisloutvaru rok dovolenkaod dovolenkado dovolenkadni datum)
+texparams=(meno priezvisko osobnecislo utvar cisloutvaru rok dovolenkaod dovolenkado dovolenkadni datum)
 allparams=(${params[@]} ${texparams[@]})
 
 usage() {
@@ -38,7 +38,10 @@ cd "$tmpdir"
 ln -s "$scriptdir/$TEXFNAME" "$TEXFNAME"
 pdflatex -jobname "$jobname" -interaction batchmode -no-shell-escape "$texcmds" > /dev/null
 
-lp -h "$printer_host" -d "$printer" "$jobname.pdf" | grep -o "$printer-[1-9][0-9]*"
+lp -h "$printer_host" -d "$printer" \
+        -o PageSize=A6 -o InputSlot=MultipurposeFeeder -o landscape \
+        "$jobname.pdf" | \
+    grep -o "$printer-[1-9][0-9]*"
 
 cd - > /dev/null
 

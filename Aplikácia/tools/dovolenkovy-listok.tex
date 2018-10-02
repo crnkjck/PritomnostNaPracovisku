@@ -2,7 +2,7 @@
 \usepackage[a6paper,textheight=9.5cm,top=.75cm,textwidth=13cm]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{stix2}
+\usepackage{tgtermes}
 \usepackage{tgheros}
 \usepackage{framed}
 \usepackage{tabularx}
@@ -17,7 +17,8 @@
 % \providecommand\dovolenkado{29. 8.}
 % \providecommand\dovolenkadni{6}
 % \providecommand\datum{5. 8. 2018}
-\providecommand\priezviskomeno{}
+\providecommand\meno{}
+\providecommand\priezvisko{}
 \providecommand\osobnecislo{}
 \providecommand\utvar{}
 \providecommand\cisloutvaru{}
@@ -35,8 +36,9 @@
 \newcommand{\titlestyle}{\sffamily\huge\bfseries\scshape}
 \newcommand{\fieldlabelstyle}{\normalfont\footnotesize\sffamily}
 \newcommand{\textfieldlabel}[1]{{\fieldlabelstyle#1\/}}
-\newcommand{\strongvaluestyle}{\bfseries\large}
-\newcommand{\emvaluestyle}{\large}
+\newcommand{\strongvaluestyle}{\bfseries\Large}
+\newcommand{\emvaluestyle}{\Large}
+\newcommand{\valuesize}{\normalsize}
 
 \newcommand{\fieldlabel}[1]{%
     \begingroup\fieldlabelstyle
@@ -60,14 +62,14 @@
      \endgroup}%
   \ULon}
 \makeatother
-\newcommand{\fieldvalue}[2][\normalsize]{{\rmfamily#1\valueuline{#2\hfill\valuestrut}}}
+\newcommand{\fieldvalue}[2][\valuesize]{{\rmfamily#1\valueuline{#2\hfill\valuestrut}}}
 \newcommand{\fieldfill}{\fieldvalue{}}
-\newcommand{\cfieldvalue}[2][\normalsize]{\fieldvalue[#1]{\hfill#2}}
-\newcommand{\inlinevalue}[2][\normalsize]{{\rmfamily#1\valueuline{#2}\valuestrut}}
+\newcommand{\cfieldvalue}[2][\valuesize]{\fieldvalue[#1]{\hfill#2}}
+\newcommand{\inlinevalue}[2][\valuesize]{{\rmfamily#1\valueuline{#2}\valuestrut}}
 
 
 \begin{document}
-    {\centering{\titlestyle\lowercase{D\,O\,V\,O\,L\,E\,N\,K\,A}}\par}
+    {\centering{\titlestyle\MakeLowercase{D\,O\,V\,O\,L\,E\,N\,K\,A}}\par}
     \vspace{-.9em}
     \begin{framed}
         \vspace*{\tabcolsep}
@@ -77,7 +79,7 @@
             }
             \fieldlabel{Priezvisko\\a~meno}
             &
-            \fieldvalue[\strongvaluestyle]{\priezviskomeno}
+            \fieldvalue[\strongvaluestyle]{\priezvisko\ \meno}
             &
             \fieldlabel{Osobné\\číslo}
             &

@@ -1,11 +1,11 @@
 <?php
 
 function sk_format_date( $date ) {
-  return date("d. n. Y", strtotime( $date ) );
+  return date("j. n. Y", strtotime( $date ) );
 }
 
 function sk_format_short_date( $date ) {
-  return date("d. n.", strtotime( $date ) );
+  return date("j. n.", strtotime( $date ) );
 }
 
 function sk_days( $num ) {

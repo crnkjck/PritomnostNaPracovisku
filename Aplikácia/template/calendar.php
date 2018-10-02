@@ -20,8 +20,8 @@ function print_calendar_holidays_value ( $user, $year, $from_time, $to_time, $nu
                           this,
                           $user->personal_id, $year,
                           \"$from_time\", \"$to_time\", $num_of_days,
-                          \"$request_date\");'>
-        <i class='fa fa-print'></i> Vytlačiť</button>
+                          \"$request_date\");'
+        >Vytlačiť</button>
     </div>
   ";
 }

@@ -9,10 +9,10 @@ $sending_mails = false;
 // PID používateľov, ktorí schvaľujú prácu doma a pracovné cesty
 $request_validators = [822];
 
-$printer_host = "localhost";
-$printer = "Tlac_dovolenkovych_listkov___print";
+$printer_host = "print.dai.fmph.uniba.sk";
+$printer = "dovolenka";
 $department = 'Katedra aplikovanej informatiky';
-$department_id = '';
+$department_id = '107240';
 
 $sk_months = ["", "Január", "Február", "Marec", "Apríl", "Máj", "Jún", "Júl", "August", "September", "Október", "November", "December"];
 $sk_days = ["", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota", "Nedela"];

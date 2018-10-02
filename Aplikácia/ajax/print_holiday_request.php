@@ -17,7 +17,8 @@ if ( post(["personal_id"]) &&
   $user = User::get( $personal_id );
 }
 
-$surname_name = escapeshellarg(preg_replace('/[\\^_{}]/', ' ', $user->name . " " . $user->surname));
+$name = preg_replace('/[\\^_{}#$~<>&]/', ' ', $user->name);
+$surname = preg_replace('/[\\^_{}#$~<>&]/', ' ', $user->surname);
 $year = preg_replace('/[^0-9]/', '', post("year"));
 $from_time = preg_replace('/[^0-9[:space:].]/', '', post("from_time"));
 $to_time = preg_replace('/[^0-9[:space:].]/', '', post("to_time"));
@@ -28,19 +29,15 @@ $jobname = preg_replace('/[^a-zA-Z0-9]/','-',
             preg_replace( '/[.[:space:]]/', '',
             join('-', array($user->username, $year, $from_time, $to_time))));
 
-$command = __DIR__ . "/../tools/dovolenkovy-listok.sh \
-        '$printer_host' \
-        '$printer' \
-        '$jobname' \
-        $surname_name \
-        '$personal_id' \
-        '$department' \
-        '$department_id' \
-        '$year' \
-        '$from_time' \
-        '$to_time' \
-        '$num_of_days' \
-        '$request_date'";
+$command =
+    join(" ", array_map(escapeshellarg, array(
+        __DIR__ . "/../tools/dovolenkovy-listok.sh",
+        $printer_host, $printer, $jobname,
+        $name, $surname, $personal_id,
+        $department, $department_id,
+        $year, $from_time, $to_time, $num_of_days,
+        $request_date
+    )));
 $output = array();
 $return_val = 0;
 

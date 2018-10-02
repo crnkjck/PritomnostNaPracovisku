@@ -53,7 +53,7 @@ function calendar_click( n ) {
   else
     date1 = date2 = 0;
 
-  $(".button_submit").css("display", "none");
+  $(".buttons .button_submit").css("display", "none");
   if ( date1 && date2 )
     $("#multiple_add").css("display", "inline-block");
   else if ( date1 )
@@ -186,7 +186,9 @@ function profile_edit() {
 }
 
 function holiday_paper(button, _personal_id, _year, _from, _to, _num, _request_date){
-  $(button).attr("disabled", "disabled");
+  $(button)
+    .attr("disabled", "disabled")
+    .addClass("disabled");
   $(button).parent().children('.message').remove();
   $(button).parent().append("<div class='message print info'>Pripravuje sa…</div>");
   $.post( "ajax/print_holiday_request.php",
@@ -195,19 +197,21 @@ function holiday_paper(button, _personal_id, _year, _from, _to, _num, _request_d
       request_date: _request_date }
     ).done( function( data ) {
       $(button).parent().children('.message').remove();
-      $(button).parent().append("<div class='message print info'>Lístok bol odoslaný na tlačiareň "
+      $(button).parent().append("<div class='message print ok'>Lístok bol odoslaný na tlačiareň "
         + "<small>(" + data + ")</small>"
         + "</div>");
-      $(button).removeAttr("disabled");
-      $(button).html("Vytlačiť znova")
     }
   ).fail( function( jqXHR ) {
       $(button).parent().children('.message').remove();
       $(button).parent().append("<div class='message print error'>Chyba pri tlači, kontaktujte správcu"
         + "<pre>" + jqXHR.responseText + "</pre>"
         + "</div>");
-      $(button).removeAttr("disabled");
-      $(button).html("Vytlačiť znova")
+    }
+  ).always( function( data$jqXHR, textStatus, jqXHR$errorThrown ) {
+    $(button)
+      .removeAttr("disabled")
+      .removeClass("disabled")
+      .html("Vytlačiť znova");
     }
   );
 }
