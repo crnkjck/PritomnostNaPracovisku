@@ -30,7 +30,7 @@ $jobname = preg_replace('/[^a-zA-Z0-9]/','-',
             join('-', array($user->username, $year, $from_time, $to_time))));
 
 $command =
-    join(" ", array_map(escapeshellarg, array(
+    join(" ", array_map('escapeshellarg', array(
         __DIR__ . "/../tools/dovolenkovy-listok.sh",
         $printer_host, $printer, $jobname,
         $name, $surname, $personal_id,
@@ -45,7 +45,7 @@ $lastout = exec($command, $output, $return_val);
 
 if ($return_val != 0) {
     header("HTTP/1.0 500 Internal server error");
-    echo(join("\n", array_map(htmlspecialchars, $output)));
+    echo(join("\n", array_map('htmlspecialchars', $output)));
 } else {
     echo(htmlspecialchars($lastout));
 }
