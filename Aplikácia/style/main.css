@@ -21,9 +21,11 @@ a:focus { background-color: none !important; }
 .active_1:hover { text-decoration: underline; }
 
 .buttons { text-align: right; }
+button, input[type=button], input[type=submit] { font-family: inherit; font-size: inherit; border: none; padding: 0; margin: 0; }
 .button_submit { display: inline-block; background-color: #B3231B; margin-bottom: 20px; color: white; font-weight: bold; padding: 5px 15px; font-size: 15px; border-radius: 5px; box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.3); }
 .button_submit#empty_add { display: inline-block; background-color: #666; }
 .button_submit.add_absence { margin-top: 20px; }
+.button_print { margin: 0; }
 .hidden { display: none; }
 
 .input_title { font-size: 22px; margin: 10px 0px; font-weight: bold; color: #323232; }
@@ -53,6 +55,7 @@ a:focus { background-color: none !important; }
 .message.info .fa { color: #0473DD; }
 .message.ok { background-color: #E9FFD9; box-shadow: 0px 0px 3px 1px #C5E0B1; }
 .message.ok .fa { color: #11B922; }
+.message.print { font-size: small; padding: 0.25em 0.5em; margin: 0; }
 
 
 /* HEADER */
@@ -109,7 +112,9 @@ footer .about { color: #FFBD43; float: right; cursor: pointer; }
 .side_table > .value:last-of-type { border-bottom: none; margin-bottom: 2px; }
 .side_table > .value:hover { background-color: #EEE; }
 .side_table .empty { font-size: 13px; color: #888; padding: 10px 15px; }
-
+.side_table h3 { font-size: 16px; margin: 0; }
+.side_table > .value > * { margin-top: 8px; }
+.side_table > .value > *:first-child { margin-top: 0; }
 
 /* FORMS */
 .form { padding: 0px 20px; }

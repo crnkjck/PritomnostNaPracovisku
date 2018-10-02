@@ -1,0 +1,166 @@
+\documentclass[a6paper,landscape,10pt]{scrartcl}
+\usepackage[a6paper,textheight=9.5cm,top=.75cm,textwidth=13cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{stix2}
+\usepackage{tgheros}
+\usepackage{framed}
+\usepackage{tabularx}
+\usepackage[normalem]{ulem}
+
+% \providecommand\priezviskomeno{Bertrand Macronovská Jaroslava}
+% \providecommand\osobnecislo{123456789}
+% \providecommand\utvar{Katedra aplikovanej informatiky}
+% \providecommand\cisloutvaru{123456789}
+% \providecommand\rok{2018}
+% \providecommand\dovolenkaod{23. 8.}
+% \providecommand\dovolenkado{29. 8.}
+% \providecommand\dovolenkadni{6}
+% \providecommand\datum{5. 8. 2018}
+\providecommand\priezviskomeno{}
+\providecommand\osobnecislo{}
+\providecommand\utvar{}
+\providecommand\cisloutvaru{}
+\providecommand\rok{\hphantom{2018}}
+\providecommand\dovolenkaod{}
+\providecommand\dovolenkado{}
+\providecommand\dovolenkadni{}
+\providecommand\datum{}
+
+\setlength{\FrameSep}{0pt}
+\setlength{\FrameRule}{1.2pt}
+\setlength{\parindent}{0pt}
+\setlength{\tabcolsep}{4pt}
+
+\newcommand{\titlestyle}{\sffamily\huge\bfseries\scshape}
+\newcommand{\fieldlabelstyle}{\normalfont\footnotesize\sffamily}
+\newcommand{\textfieldlabel}[1]{{\fieldlabelstyle#1\/}}
+\newcommand{\strongvaluestyle}{\bfseries\large}
+\newcommand{\emvaluestyle}{\large}
+
+\newcommand{\fieldlabel}[1]{%
+    \begingroup\fieldlabelstyle
+    \tabular[b]{@{}l@{}}
+        #1
+    \endtabular\vrule height 5mm depth 0pt width 0pt%
+    \endgroup%
+}
+
+\newlength{\valuestrutheight}
+\settoheight{\valuestrutheight}{\fieldlabel{X\\Y}}
+\newcommand{\valuestrut}{\vrule height\valuestrutheight width 0pt\relax}
+
+\makeatletter
+\def\valueuline{\bgroup 
+  \UL@setULdepth
+  \markoverwith{\begingroup
+     \fieldlabelstyle
+     % \advance\ULdepth0.08ex
+     \lower.2em\hbox{.\kern.083333em}%
+     \endgroup}%
+  \ULon}
+\makeatother
+\newcommand{\fieldvalue}[2][\normalsize]{{\rmfamily#1\valueuline{#2\hfill\valuestrut}}}
+\newcommand{\fieldfill}{\fieldvalue{}}
+\newcommand{\cfieldvalue}[2][\normalsize]{\fieldvalue[#1]{\hfill#2}}
+\newcommand{\inlinevalue}[2][\normalsize]{{\rmfamily#1\valueuline{#2}\valuestrut}}
+
+
+\begin{document}
+    {\centering{\titlestyle\lowercase{D\,O\,V\,O\,L\,E\,N\,K\,A}}\par}
+    \vspace{-.9em}
+    \begin{framed}
+        \vspace*{\tabcolsep}
+        \begin{tabularx}{\linewidth}%
+            {
+                l X l p{7em}
+            }
+            \fieldlabel{Priezvisko\\a~meno}
+            &
+            \fieldvalue[\strongvaluestyle]{\priezviskomeno}
+            &
+            \fieldlabel{Osobné\\číslo}
+            &
+            \fieldvalue{\osobnecislo}
+            \\
+            \fieldlabel{Útvar}
+            &
+            \fieldvalue{\utvar}
+            &
+            \fieldlabel{Číslo\\útvaru}
+            &
+            \fieldvalue{\cisloutvaru}
+        \end{tabularx}
+        \begin{tabularx}{\linewidth}{ X }
+        \fieldlabel{žiada o dovolenku za kalendárny rok}
+        \inlinevalue{\quad\rok\quad\null}\\
+        \fieldlabel{od} \cfieldvalue[\strongvaluestyle]{\dovolenkaod}
+        \fieldlabel{do} \cfieldvalue[\strongvaluestyle]{\dovolenkado}
+        \fieldlabel{vrátane, t.j.}
+        \cfieldvalue[\emvaluestyle]{\dovolenkadni}
+        \fieldlabel{pracovných dní.}\\
+        \fieldlabel{Miesto pobytu na dovolenke} \fieldfill
+        \end{tabularx}
+        \begin{tabularx}{\linewidth}
+            {
+                c X c
+            }
+            \cfieldvalue{\datum}
+            &
+            &
+            \fieldfill\vrule height 8mm width 0pt\relax
+            \\
+            \hspace*{5em}\textfieldlabel{Dátum}\hspace*{5em}
+            &
+            &
+            \hspace*{6em}\textfieldlabel{Podpis zamestnanca}\hspace*{6em}
+        \end{tabularx}
+        \begin{tabularx}{\linewidth}
+            {
+                l | X | X | X
+            }
+            \hline
+            &
+            \multicolumn{1}{c|}{\fieldlabelstyle Dátum}
+            &
+            \multicolumn{1}{c|}{\fieldlabelstyle Ved.\kern.25em útvaru}
+            &
+            \multicolumn{1}{c}{\fieldlabelstyle Pers.\kern.25em útvar}
+            \\
+            \hline
+            \fieldlabel{Schválil}
+            &
+            &
+            &
+            \\
+            \hline
+            \fieldlabel{Skutočný nástup dovolenky}
+            &
+            &
+            &
+            \\
+            \hline
+            \fieldlabel{Nástup do zamestnania po dovolenke}
+            &
+            &
+            &
+            \\
+            \hline
+            \multicolumn{3}{ l | }{
+                \fieldlabel{Z tejto dovolenky sa skutočne čerpalo}
+                \fieldfill\
+                \fieldlabel{pracovných dní.}
+            }
+            &
+            % \\
+            % \hline
+        \end{tabularx}
+        % \par
+        % \vspace*{\tabcolsep}
+        % {\fieldlabelstyle\robotocondensed\hspace*{.5\tabcolsep}
+        % Poznámky o~mzdových nárokoch,
+        % neodovzdaných nástrojoch,
+        % pracovných pomôckach a~i. uveďte na zadnej strane.\par}
+        % \vspace*{\tabcolsep}
+    \end{framed}
+\end{document}

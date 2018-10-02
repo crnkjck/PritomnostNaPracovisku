@@ -1,9 +1,14 @@
 <?php
 
 class User {
+  const STATUS_DISABLED = 0;
+  const STATUS_REGULAR = 1;
+  const STATUS_SECRETARY = 2;
+  const STATUS_ADMINISTRATOR = 3;
+
   var $id = 0;
   var $personal_id = 0;
-  var $status = 0;
+  var $status = User::STATUS_DISABLED;
   var $username = "";
   var $name = "";
   var $surname = "";
@@ -39,16 +44,16 @@ class User {
     if ( $n = $sql->fetch_assoc() )
       $user->holidays_budget = $n["num"];
 
-    if ( $user->status > 0 ) $user->user = true;
-    if ( $user->status == 2 ) $user->super_user = true;
-    if ( $user->status == 3 ) $user->admin = true;
+    if ( $user->status > User::STATUS_DISABLED ) $user->user = true;
+    if ( $user->status == User::STATUS_SECRETARY ) $user->super_user = true;
+    if ( $user->status == User::STATUS_ADMINISTRATOR ) $user->admin = true;
 
     if ( in_array($user->personal_id, $request_validators) ) $user->request_validator = true;
 
     return $user;
   }
 
-  static function login( $security = 0, $request_validation = 0 ) {
+  static function login( $security = User::STATUS_DISABLED, $request_validation = 0 ) {
     global $conn;
 
     if ( get(["logout"]) ) {
@@ -99,14 +104,17 @@ class User {
     return $user;
   }
 
-  static function create_all_users( $status = 1 ) {
+  static function create_all_users( $status = User::STATUS_REGULAR ) {
     global $conn;
 
-    $str = "status > 0";
-    if ( $status == 0 ) $str = "status = 0";
+    $condition = "status > " . User::STATUS_DISABLED;
+    if ( $status == User::STATUS_DISABLED ) {
+      $condition = "status = " . User::STATUS_DISABLED;
+    }
+    $query = "SELECT id, personal_id FROM users WHERE $condition ORDER BY surname, name";
 
     $arr = [];
-    $sql = $conn->query("SELECT id, personal_id FROM users WHERE $str ORDER BY surname, name");
+    $sql = $conn->query($query);
     while ( $u = $sql->fetch_assoc() )
       $arr[ $u["id"] ] = User::get( $u["personal_id"] );
     return $arr;

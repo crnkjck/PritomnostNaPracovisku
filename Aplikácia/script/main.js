@@ -185,16 +185,29 @@ function profile_edit() {
     } );
 }
 
-function holiday_paper(_name, _surname, _p_id, _from, _to, _num){
-  $.post( "tools/holiday_paper.php",
-    { name: _name, surname: _surname, personal_id: _p_id,
-      from_time: _from, to_time: _to, num_of_days: _num }
+function holiday_paper(button, _personal_id, _year, _from, _to, _num, _request_date){
+  $(button).attr("disabled", "disabled");
+  $(button).parent().children('.message').remove();
+  $(button).parent().append("<div class='message print info'>Pripravuje sa…</div>");
+  $.post( "ajax/print_holiday_request.php",
+    { personal_id: _personal_id,
+      year: _year, from_time: _from, to_time: _to, num_of_days: _num,
+      request_date: _request_date }
     ).done( function( data ) {
-      var w = window.open('','Print-Window');
-      w.document.open();
-      w.document.write(data);
-      w.document.close();
-      w.print();
+      $(button).parent().children('.message').remove();
+      $(button).parent().append("<div class='message print info'>Lístok bol odoslaný na tlačiareň "
+        + "<small>(" + data + ")</small>"
+        + "</div>");
+      $(button).removeAttr("disabled");
+      $(button).html("Vytlačiť znova")
+    }
+  ).fail( function( jqXHR ) {
+      $(button).parent().children('.message').remove();
+      $(button).parent().append("<div class='message print error'>Chyba pri tlači, kontaktujte správcu"
+        + "<pre>" + jqXHR.responseText + "</pre>"
+        + "</div>");
+      $(button).removeAttr("disabled");
+      $(button).html("Vytlačiť znova")
     }
   );
 }
