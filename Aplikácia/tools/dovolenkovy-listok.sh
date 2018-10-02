@@ -8,6 +8,14 @@ TEXFNAME="dovolenkovy-listok.tex"
 scriptdir="$(realpath -- "$(dirname -- "$0")")"
 scriptname="$(basename -- "$0")"
 
+# Detect whether mktemp is the GNU coreutils version (for macOS local devel)
+if mktemp --version > /dev/null 2>&1; then
+    mktemp="mktemp"
+else
+    # Try gmktemp otherwise; may fail later
+    mktemp="gmktemp"
+fi
+
 declare -a params
 params=(printer_host printer jobname)
 texparams=(meno priezvisko osobnecislo utvar cisloutvaru rok dovolenkaod dovolenkado dovolenkadni datum)
@@ -31,7 +39,7 @@ for param in ${texparams[@]}; do
 done
 texcmds="$texcmds\\input{$TEXFNAME}"
 
-tmpdir="$(mktemp -d "$TMPDIR/pritomnost.$jobname.XXXXXXXX")"
+tmpdir="$($mktemp --directory --tmpdir "pritomnost.$jobname.XXXXXXXX")"
 
 cd "$tmpdir"
 # TeXu sa nepacia cesty k suborom v kodovani UTF-8
