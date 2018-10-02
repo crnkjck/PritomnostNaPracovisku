@@ -37,12 +37,14 @@ class Overview {
     while ( $a = $absences->fetch_assoc() ) {
         $day = new Day( $a["day"], $this->m, $this->y, $a["user_id"] );
 
-        if ( $day->public == 1 || $my_account->status > 0 ) {
-          if ( !isset( $this->days[ $a["day"] ] ) )
-            $this->days[ $a["day"] ] = [];
+        if (isset($my_account)) {
+          if ( $day->public == 1 || $my_account->status > 0 ) {
+            if ( !isset( $this->days[ $a["day"] ] ) )
+              $this->days[ $a["day"] ] = [];
 
-          if ( is_array($this->days[ $a["day"] ]) )
-            array_push( $this->days[ $a["day"] ], $day);
+            if ( is_array($this->days[ $a["day"] ]) )
+              array_push( $this->days[ $a["day"] ], $day);
+          }
         }
     }
 
@@ -104,8 +106,12 @@ class Overview {
   function remove_button( $a, $name, $surname ) {
     global $my_account;
 
+    if (!isset($my_account) || !isset($a)) return "";
     // button ukaz iba pri mojich udalostiach (alebo admin)
-    if ( ($my_account->id == $a->user_id || $my_account->super_user) && (edit_date( $a->year, $a->month, $a->type ) || $my_account->status == 2) )
+    if ( ($my_account->id == $a->user_id ||
+          $my_account->super_user) &&
+         (edit_date( $a->year, $a->month, $a->type ) ||
+          $my_account->status == 2) )
       return print_overview_box_value_remove ( $this->y, $this->m, $name, $surname, $a->absence_id, $this->personal_id );
     return "";
   }
