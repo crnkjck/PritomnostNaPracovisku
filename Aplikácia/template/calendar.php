@@ -12,10 +12,16 @@ function print_calendar_holidays_empty () {
   return "<div class='empty'>V tomto mesiaci nemáte zadanú žiadnu dovolenku...</div>";
 }
 
-function print_calendar_holidays_value ( $user, $from_time, $to_time, $num_of_days ) {
+function print_calendar_holidays_value ( $user, $year, $from_time, $to_time, $num_of_days, $request_date ) {
   return "
-    <div class='value' onclick='holiday_paper(\"$user->name\", \"$user->surname\", $user->personal_id, \"$from_time\", \"$to_time\", $num_of_days);'>
-      $from_time - $to_time <span>(Počet dní: $num_of_days)</span>
+    <div class='value'>
+      <h3>$from_time &ndash; $to_time $year <small>(" . sk_days($num_of_days) . ")</small></h3>
+      <button class='button_submit button_print' onclick='holiday_paper(
+                          this,
+                          $user->personal_id, $year,
+                          \"$from_time\", \"$to_time\", $num_of_days,
+                          \"$request_date\");'
+        >Vytlačiť</button>
     </div>
   ";
 }
@@ -137,8 +143,8 @@ function print_calendar_table($y, $m, $yL, $mL, $yR, $mR, $data, $personal_id, $
 
   <div class='buttons'>
     <div class='button_submit' id='empty_add'>Vyberte deň alebo rozmedzie</div>
-    <div class='button_submit hidden' id='single_add' onclick='calendar_add($y, $m, $personal_id);'>Pridať neúčasť pre deň</div>
-    <div class='button_submit hidden' id='multiple_add' onclick='calendar_add($y, $m, $personal_id);'>Pridať neúčasť pre rozmedzie</div>
+    <div class='button_submit hidden' id='single_add' onclick='calendar_add($y, $m, $personal_id);'>Pridať neprítomnosť pre deň</div>
+    <div class='button_submit hidden' id='multiple_add' onclick='calendar_add($y, $m, $personal_id);'>Pridať neprítomnosť pre rozmedzie</div>
   </div>
 
   <div class='spacer'></div>

@@ -94,9 +94,13 @@ for ( $i = 1; $i <= $num_of_days; $i++ ) {
   }
   if ( $i == $num_of_days || ( $days[$i]->type != 3 && $days[$i]->day_of_week <= 5 && !$days[$i]->holiday ) ){
     if ( $start && $end ) {
-      $from = sk_format_date( $days[$start]->date );
-      $to = sk_format_date( $days[$end]->date );
-      $holidays_data .= print_calendar_holidays_value ( $user, $from, $to, $count );
+      $year = date("Y", strtotime( $days[$start]->date ) );
+      $from = sk_format_short_date( $days[$start]->date );
+      $to = sk_format_short_date( $days[$end]->date );
+      $request_date = sk_format_date( $days[$start]->insert_time );
+      if ( strtotime( $days[$start]->insert_time ) > strtotime( $days[$start]->date ) )
+        $request_date = "";
+      $holidays_data .= print_calendar_holidays_value ( $user, $year, $from, $to, $count, $request_date );
       $start = $end = $count = 0;
     }
   }

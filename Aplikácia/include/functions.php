@@ -1,7 +1,21 @@
 <?php
 
 function sk_format_date( $date ) {
-  return date("d.m.Y", strtotime( $date ) );
+  return date("j. n. Y", strtotime( $date ) );
+}
+
+function sk_format_short_date( $date ) {
+  return date("j. n.", strtotime( $date ) );
+}
+
+function sk_days( $num ) {
+    if ($num == 1) {
+        return "1 deň";
+    } elseif ($num >= 2 && $num <= 4) {
+        return "$num dni";
+    } else {
+        return "$num dní";
+    }
 }
 
 function display_time( $from, $to ) {
