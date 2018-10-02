@@ -106,8 +106,54 @@ function print_calendar_table_td_null () {
   return "<td class='empty'></td>";
 }
 
-function print_calendar_table_td ( $day, $class, $icon ) {
-  return "<td onclick='calendar_click($day);' class='active $class day_$day'><span class='$icon'></span> $day</td>";
+function fa_icon($icon, $class = '', $title = NULL) {
+  return "<span class='fa fa-$icon" . ($class ? " " . $class : "") . "'"
+    . ($title ? " title='$title'" : "")
+    . "></span>";
+}
+
+function print_calendar_table_td ( $day, $class, $approved, $type ) {
+  global $sk_types;
+  $type_icon = "";
+  switch ($type) {
+    case ABSENCE_SICK:
+      $type_icon = fa_icon("user-md", "fa-fw");
+      break;
+    case ABSENCE_JOURNEY:
+      $type_icon = fa_icon("briefcase", "fa-fw");
+      break;
+    case ABSENCE_LEAVE:
+      $type_icon = fa_icon("plane", "fa-fw");
+      break;
+    case ABSENCE_HOMEOFFICE:
+      $type_icon = fa_icon("home", "fa-fw");
+      break;
+    case ABSENCE_OTHER:
+      $type_icon = fa_icon("ellipsis-h", "fa-fw");
+      break;
+    case ABSENCE_MOTHER:
+      $type_icon = fa_icon("female") . fa_icon("child", "small");
+      break;
+    case ABSENCE_PARENT:
+      $type_icon = fa_icon("female") . fa_icon("child", "small") . fa_icon("male");
+      break;
+  }
+  if ($type_icon) {
+    $type_icon = "<span class='absence-type-icon'>$type_icon</span>";
+    $title = $sk_types[$type];
+    if ($approved) {
+      $approval_icon = fa_icon("check", "fa-fw approval-icon");
+      $title .= " (schválená)";
+    } else {
+      $approval_icon = fa_icon("times", "fa-fw approval-icon");
+      $title .= " (zatiaľ neschválená)";
+    }
+    $title = " title='$title'";
+  } else {
+    $title = "";
+    $approval_icon = "";
+  }
+  return "<td onclick='calendar_click($day);' class='active $class day_$day' $title>$type_icon $day $approval_icon</td>";
 }
 
 function print_calendar_table_tr ($data) {
