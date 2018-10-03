@@ -3,7 +3,7 @@
 function print_index_person ( $id, $name, $surname, $personal_id ) {
   return "
   <div class='value person' id='person_$id' onclick='overview_set_user($id);'>
-    $surname $name <span>$personal_id</span>
+    $surname $name <span class='personal_id'>$personal_id</span>
   </div>
   ";
 }

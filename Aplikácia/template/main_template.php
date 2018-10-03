@@ -34,15 +34,21 @@ function print_header() {
   if ( $my_account->status > 0 ) $str = print_header_logged_on($my_account->name, $my_account->surname, $my_account->personal_id, $my_account->holidays_spend, $my_account->holidays_budget);
   else $str = print_header_logged_off();
 
-  $m2 = "";
-  $m3 = "";
-  $m4 = "";
-  if ( $my_account->status > 0 ) $m2 = "<li><a href='calendar.php'>Vaša neprítomnosť</a></li>";
-  if ( $my_account->status >= 2 ) $m3 = "
-    <li><a href='users.php'>Používatelia</a></li>
-    <li><a href='terms.php'>Termíny</a></li>
-    <li><a href='events.php'>Udalosti</a></li>
-  ";
+  $menu_items = array( 'index.php' => "Prehľad" );
+  if ( $my_account->status > 0 ) {
+    $menu_items['calendar.php'] = 'Vaša neprítomnosť';
+  }
+  if ( $my_account->status >= 2 ) {
+    $menu_items['users.php'] = 'Používatelia';
+    $menu_items['terms.php'] = 'Termíny';
+    $menu_items['events.php'] = 'Udalosti';
+  }
+  $menu = join("\n",
+    array_map( function($href, $label) {
+      return "<li" .
+        ($href == basename($_SERVER['PHP_SELF']) ? " class='active'" : "") .
+        "><a href='$href'>$label</a></li>";
+    }, array_keys($menu_items), $menu_items));
   if ( $my_account->request_validator ) $m4 = "<li><a href='requests.php'>Žiadosti</a></li>";
 
   return "
@@ -52,7 +58,7 @@ function print_header() {
       <meta charset='utf-8'>
       <meta name='viewport' content='width=device-width'>
       <meta name='author' content='TEAM UNKNOWNS - TIS 2017/2018'>
-      <link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Ubuntu:400,500,700|Open+Sans:400,700&amp;subset=latin,latin-ext' media='all'>
+      <link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Ubuntu:400,400i,700,700i|Open+Sans:400,700&amp;subset=latin,latin-ext' media='all'>
       <link rel='shortcut icon' href='image/favicon.ico' type='image/x-icon'>
       <link rel='stylesheet' href='style/main.css' type='text/css'>
       <script>
@@ -74,17 +80,13 @@ function print_header() {
         </div>
 
         <div class='content'>
-          <a href='https://fmph.uniba.sk'><img class='logo' src='image/logo_fmfi.png'></a>
-          <h1>Univerzita Komenského v Bratislave<br>Fakulta matematiky, fyziky a informatiky<br>Katedra aplikovanej informatiky</h1>
-          <h2>Prítomnosť na pracovisku</h2>
+          <h1><a href='/'>Prítomnosť na pracovisku</a></h1>
+          <h2><a href='//dai.fmph.uniba.sk'>Katedra aplikovanej informatiky</a></h2>
         </div>
 
         <nav>
           <ul>
-            <li><a href='index.php'>Prehľad</a></li>
-            $m2
-            $m3
-            $m4
+            $menu
             <div class='spacer'></div>
           </ul>
         </nav>

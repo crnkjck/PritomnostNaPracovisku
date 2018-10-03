@@ -11,26 +11,26 @@ function print_profile_edit($name, $surname, $username, $email) {
 
     <div class='form'>
       <div>
-        <span>Prihlasovacie meno</span>
-        <input name='username' type='text' placeholder='Zadajte prihlasovacie meno' value='$username'>
+        <label for='username'>Prihlasovacie meno</label>
+        <input id='username' name='username' type='text' placeholder='Zadajte prihlasovacie meno' value='$username'>
       </div>
 
       <div>
-        <span>Email</span>
-        <input name='email' type='text' placeholder='Zadajte email' value='$email'>
+        <label for='email'>Email</label>
+        <input id='email' name='email' type='text' placeholder='Zadajte email' value='$email'>
       </div>
 
       <div>
-        <span>Prihlasovacie heslo</span>
+        <label for='password_new_1'>Prihlasovacie heslo</label>
         <div class='info'><span class='fa fa-info-circle'></span> V prípade, že nechcete meniť pôvodné heslo, vynechajte túto kolónku.</div>
-        <input name='password_new_1' type='password' placeholder='Zadajte nové heslo'><br>
-        <input name='password_new_2' type='password' placeholder='Znova zadajte nové heslo'>
+        <input id='password_new_1' name='password_new_1' type='password' placeholder='Zadajte nové heslo'><br>
+        <input id='password_new_2' name='password_new_2' type='password' placeholder='Znova zadajte nové heslo'>
       </div>
 
       <div>
-        <span>Potvrdenie údajov</span>
+        <label for='password'>Potvrdenie údajov</label>
         <div class='info'><span class='fa fa-info-circle'></span> Pre potvrdenie zadaných údajov je nutné vložiť prihlasovacie heslo.</div>
-        <input name='password' type='password' placeholder='Vaše heslo'><br>
+        <input id='password' name='password' type='password' placeholder='Vaše heslo'><br>
       </div>
     </div>
     <div class='button_submit' onclick='profile_edit();'>Potvrdiť údaje</div>

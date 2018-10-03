@@ -131,9 +131,9 @@ function print_calendar_table($y, $m, $yL, $mL, $yR, $mR, $data, $personal_id, $
   <table id='calendar_table'>
 
   <tr>
-    <th onclick='reload_calndar($yL, $mL);'><span class='fa fa-arrow-left'></span></th>
+    <th onclick='reload_calndar($yL, $mL);'><span class='fa fa-chevron-left'></span></th>
     <th colspan='5'>$sk_months[$m] $y</th>
-    <th onclick='reload_calndar($yR, $mR);'><span class='fa fa-arrow-right'></span></th>
+    <th onclick='reload_calndar($yR, $mR);'><span class='fa fa-chevron-right'></span></th>
   </tr>
   <tr><th>Po</th> <th>Ut</th> <th>St</th> <th>Št</th> <th>Pia</th> <th>So</th> <th>Ne</th></tr>
   $data
