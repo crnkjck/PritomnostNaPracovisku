@@ -3,7 +3,7 @@
 
 /* MAIN */
 html { cursor: default; background-color: #323232; }
-body { margin: 0px; min-width: 740px; background-color: #FFF; font-family: 'Ubuntu', sans-serif;
+body { margin: 0px; min-width: 740px; background-color: #FFF; font-family: 'Open Sans', sans-serif;
       -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
 *[onclick] { cursor: pointer; }
 a { color: inherit; text-decoration: none; }
@@ -14,8 +14,10 @@ a:focus { background-color: none !important; }
 .content { max-width: 1200px; margin: 0px auto; padding: 20px 10px; }
 .admin_icon { cursor: pointer; }
 
-.title_1 { margin-bottom: 20px; background-color: #B3231B; color: #FFF; padding: 15px 20px; text-transform: uppercase; font-size: 18px; font-weight: bold; }
-.title_1 > .subtitle { font-size: 13px; margin-top: 10px; }
+.title, .title_1, h1, h2, h3, h4, h5, nav { font-family: Ubuntu, sans-serif; }
+
+.title_1 { margin-bottom: 20px; background-color: #B3231B; color: #FFF; padding: 15px 20px; text-transform: uppercase; font-size: 20px; font-weight: bold; }
+.title_1 > .subtitle { font-size: 14px; margin-top: 10px; }
 
 .active_1 { text-decoration: underline; }
 .active_1:hover { text-decoration: underline; }
@@ -28,7 +30,7 @@ button, input[type=button], input[type=submit] { font-family: inherit; font-size
 .button_print { margin: 0; }
 .hidden { display: none; }
 
-.input_title { font-size: 22px; margin: 10px 0px; font-weight: bold; color: #323232; }
+.input_title { font-size: 20px; margin: 10px 0px; font-weight: bold; color: #323232; }
 
 .input_value { background-color: #EEE; border-radius: 5px; box-shadow: inset 0px 0px 5px 1px rgba(0,0,0,0.5); padding: 3px 10px; float: left; }
 .input_value span { display: inline-block; margin: 5px; border-radius: 3px; box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.3); color: white; background-color: #323232; padding: 3px 10px; font-weight: bold; transition-duration: 0.5s; }
@@ -60,21 +62,21 @@ button, input[type=button], input[type=submit] { font-family: inherit; font-size
 
 /* HEADER */
 header .content { padding: 0px 10px; }
-header { position: relative; overflow: hidden; background-image: url("../image/header.jpg"); background-color: #191919; background-position: center; background-repeat: no-repeat; }
-header > .content { height: 200px; position: relative; }
+header { position: relative; overflow: hidden; background-image: url("../image/dai-header80.jpg"); background-color: #191919; background-position: center; background-repeat: no-repeat; }
+header > .content { position: relative; margin-top: 30px; margin-bottom: 30px; }
 header > .top { background-color: rgba(0,0,0,0.5); color: #FFF; padding: 8px 10px; }
-header > div > a { margin: 19px; float: left; }
-header h1 { padding: 17px 0px 0px 0px; margin: 0px; font-size: 25px; color: #FFF; text-transform: uppercase; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
-header h2 { padding: 5px 0px 0px 0px; margin: 0px; font-size: 18px; color: #FFF; text-transform: uppercase; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); font-weight: normal; }
+header > div > a { margin: 19px; }
+header h1 { padding: 0; margin: 10px 0; font-size: 30px; line-height: 30px; color: #FFF; text-transform: uppercase; text-shadow: 0px 0px 3px rgba(0,0,0,0.8); }
+header h2 { padding: 0; margin: 10px 0; font-size: 20px; line-height: 20px; color: #FFF; text-transform: uppercase; text-shadow: 0px 0px 3px rgba(0,0,0,0.8); font-weight: normal; }
 
-header .login_form { text-align: right; font-size: 13px; position: relative; }
+header .login_form { text-align: right; font-size: 14px; position: relative; }
 header .login_form  input, header .login_form  label { border-radius: 3px; border: none; font-size: 12px; }
 header .login_form  input { margin: 0px 10px; padding: 3px 6px; }
 header .login_form  label { background-color: #B3231B; color: #FFF; padding: 6px 10px; cursor: pointer; }
 header .login_form  label:hover { background-color: #535250; }
 header .login_form  input[type='submit'], header .login_form  input[type='button'] { display: none; }
 
-.lost_pass { position: absolute; margin-top: 35px; right: 0px; color: #B3231B; font-size: 13px; z-index: 100; font-weight: bold; }
+.lost_pass { position: absolute; margin-top: 35px; right: 0px; color: #B3231B; font-size: 14px; z-index: 100; font-weight: bold; }
 .lost_pass:hover { text-decoration: underline; }
 
 #lost_pass_form { color: #FFF; position: absolute; margin-top: 60px; right: 0px; z-index: 100; background-color: rgba(0,0,0,0.5); padding: 10px; border-radius: 10px; display: none; }
@@ -91,11 +93,12 @@ header .logged_panel > a { font-size: 16px; }
 header .logged_panel > a > span { padding: 0px 15px; }
 
 nav { background-color: rgba(0,0,0,0.4); width: 100%; }
-nav ul { padding: 5px 3px; max-width: 1200px; margin: 0px auto; font-weight: bold; text-transform: uppercase; font-size: 12px; }
+nav ul { padding: 5px 10px; max-width: 1200px; margin: 0px auto; font-weight: bold; text-transform: uppercase; font-size: 14px; }
 nav ul > li { border-right: 1px solid #CCC; border-left: 1px solid #CCC; color: #FFF; list-style: none; list-style-type: none; float: left; padding: 2px 15px; }
-nav ul > li:first-of-type { border-left: none; }
+nav ul > li:first-of-type { border-left: none; padding-left: 0; }
 nav ul > li:last-of-type { border-right: none; }
 nav ul > li:hover { text-decoration: underline; cursor: pointer; }
+nav .active { text-decoration: underline; }
 
 
 /* FOOTER */
@@ -107,11 +110,11 @@ footer .about { color: #FFBD43; float: right; cursor: pointer; }
 /* SIDE TABLE */
 .side_table { width: 300px; float: left; box-shadow: inset 0px 0px 0px 2px rgb(216, 216, 216); }
 .side_table > .title { background-color: #B3231B; color: #FFF; font-size: 16px; font-weight: bold; text-transform: uppercase; padding: 15px 15px; }
-.side_table > .value { padding: 8px 15px; margin: 0px 10px; border-bottom: 1px solid rgb(216, 216, 216); font-size: 12px; color: #444; cursor: pointer; }
-.side_table > .value > span { color: #999; }
+.side_table > .value { padding: 8px 15px; margin: 0px 10px; border-bottom: 1px solid rgb(216, 216, 216); font-size: 14px; color: #444; cursor: pointer; }
+.side_table > .value > .personal_id { font-size: 12px; color: #999; }
 .side_table > .value:last-of-type { border-bottom: none; margin-bottom: 2px; }
 .side_table > .value:hover { background-color: #EEE; }
-.side_table .empty { font-size: 13px; color: #888; padding: 10px 15px; }
+.side_table .empty { font-size: 14px; color: #888; padding: 10px 15px; }
 .side_table h3 { font-size: 16px; margin: 0; }
 .side_table > .value > * { margin-top: 8px; }
 .side_table > .value > *:first-child { margin-top: 0; }
@@ -119,7 +122,7 @@ footer .about { color: #FFBD43; float: right; cursor: pointer; }
 /* FORMS */
 .form { padding: 0px 20px; }
 .form > div { margin: 10px; }
-.form > div > span { display: block; font-size: 12px; color: #666; margin-left: -10px; }
+.form > div > label { display: block; font-size: 14px; margin-left: -10px; }
 .form > .name { margin: 0px; background-color: #B3231B; color: #FFF; padding: 15px 20px; text-transform: uppercase; font-size: 16px; font-weight: bold; }
 
 .form > div > input[type='text'] ,
@@ -160,14 +163,14 @@ footer .about { color: #FFBD43; float: right; cursor: pointer; }
 #overview_table > .box > table .value > td { padding-top: 0px; padding: 8px 10px 0px 10px; }
 #overview_table > .box > table .value > .name { font-weight: bold; width: 99%; }
 #overview_table > .box > table .value > .name > strong { color: #B3231B; }
-#overview_table > .box > table .value > .name > span { font-size: 13px; color: #B3231B; margin: 0px 5px 0px -5px; width: 15px; }
+#overview_table > .box > table .value > .name > span { font-size: 12px; color: #B3231B; margin: 0px 5px 0px -5px; width: 15px; }
 #overview_table > .box > table .value > .time { font-weight: bold; white-space: nowrap; }
 #overview_table > .box > table .value > .time > strong { color: #B3231B;  }
 #overview_table > .box > table .value > .type { white-space: nowrap; }
 
 #overview_table > .box > table .subtype > td { padding: 0px 10px; font-style: italic; font-size: 12px; }
 
-#overview_table > .box > table .desc > td { color: #777; padding: 0px 10px 8px 10px; font-size: 13px; border-bottom: 1px solid rgb(216, 216, 216); }
+#overview_table > .box > table .desc > td { color: #777; padding: 0px 10px 8px 10px; font-size: 12px; border-bottom: 1px solid rgb(216, 216, 216); }
 #overview_table > .box > table .desc:last-of-type > td { border-bottom: none; }
 
 
