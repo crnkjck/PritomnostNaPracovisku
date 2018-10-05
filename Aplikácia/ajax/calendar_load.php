@@ -67,15 +67,7 @@ for ( $w = 0; $w <= 5 ; $w++ ) {
         if ( $day->type )
           $class = "absence";
 
-        $icon = "";
-        if ( $day->type ) {
-          if ( $day->confirmation )
-            $icon = "fa fa-check";
-          else
-            $icon = "fa fa-times";
-        }
-
-        $str .= print_calendar_table_td( $day_number, $class, $icon );
+        $str .= print_calendar_table_td( $day_number, $class, $day->confirmation, $day->type );
       }
   }
   $data .= print_calendar_table_tr( $str );

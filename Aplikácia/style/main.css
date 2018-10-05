@@ -182,11 +182,15 @@ footer .about { color: #FFBD43; float: right; cursor: pointer; }
 #calendar_table tr:nth-child(2) { color: #AAA; }
 #calendar_table th, #calendar_table td { padding: 10px 0px; }
 #calendar_table th { background-color: #323232; }
+#calendar_table td { position: relative; }
 #calendar_table td.empty { background-color: #F5F5F5; }
 #calendar_table td.week { background-color: #DDD; }
 #calendar_table td.weekend { background-color: #AAA; }
 #calendar_table td.absence { background-color: #B3231B; color: white; }
 #calendar_table td.holiday { background-color: #FFBD43; }
+.absence-type-icon { position: absolute; left: 8px; }
+.approval-icon { position: absolute; right: 8px; }
+.small { font-size: 80%; }
 
 
 /* USERS */
