@@ -43,13 +43,15 @@ function print_header() {
     $menu_items['terms.php'] = 'Termíny';
     $menu_items['events.php'] = 'Udalosti';
   }
+  if ( $my_account->request_validator ) {
+    $menu_items['requests.php'] = 'Žiadosti';
+  }
   $menu = join("\n",
     array_map( function($href, $label) {
       return "<li" .
         ($href == basename($_SERVER['PHP_SELF']) ? " class='active'" : "") .
         "><a href='$href'>$label</a></li>";
     }, array_keys($menu_items), $menu_items));
-  if ( $my_account->request_validator ) $m4 = "<li><a href='requests.php'>Žiadosti</a></li>";
 
   return "
   <!DOCTYPE html>
