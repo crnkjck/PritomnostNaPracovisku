@@ -10,6 +10,7 @@ $sql->bind_param('s', $mail);
 $sql->execute();
 $sql = $sql->get_result();
 
+set_plain_output();
 if ( $u = $sql->fetch_assoc() ) {
   $d_pass = substr(sha1(time()), 0, 8);
   $e_pass = password_hash( $d_pass, PASSWORD_BCRYPT );

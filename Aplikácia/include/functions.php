@@ -127,4 +127,8 @@ function edit_date( $y, $m, $type ) {
   return false;
 }
 
+function set_plain_output() {
+  header('Content-Type: text/plain; charset=UTF-8');
+}
+
 ?>

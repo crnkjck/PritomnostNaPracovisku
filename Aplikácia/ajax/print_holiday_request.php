@@ -73,5 +73,5 @@ list($lastout, $etc) =
                 $printer_option_args
             ))));
 
-header('Content-Type: text/plain; charset=utf-8');
+set_plain_output();
 echo htmlspecialchars($lastout);
