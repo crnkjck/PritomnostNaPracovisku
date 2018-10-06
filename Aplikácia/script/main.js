@@ -104,12 +104,16 @@ function request_set ( id ) {
   $.post("ajax/request_set.php", { id: id })
     .done( function(data){
       if ( data == "OK1" ) {
-        $("#request_check_" + id).removeClass("disable");
-        $("#request_check_" + id).addClass("enable");
+        $("#request_check_" + id)
+          .removeClass("disable")
+          .addClass("enable")
+          .attr("title", "Schválená");
       }
       if ( data == "OK2" ) {
-        $("#request_check_" + id).removeClass("enable");
-        $("#request_check_" + id).addClass("disable");
+        $("#request_check_" + id)
+          .removeClass("enable")
+          .addClass("disable")
+          .attr("title", "Schváliť");
       }
     } );
 }

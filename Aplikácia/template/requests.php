@@ -17,7 +17,8 @@ function print_requests( $year, $year_minus, $year_plus, $str ){
       <table>
         <tr>
           <th>Dátum</th>
-          <th colspan='2'>Popis</th>
+          <th>Popis</th>
+          <th>Schválenie</th>
         </tr>
         $str
       </table>
@@ -27,12 +28,19 @@ function print_requests( $year, $year_minus, $year_plus, $str ){
   ";
 }
 
-function print_requests_table_row ( $id, $date, $time, $user_name, $type, $description, $class ) {
+function print_requests_table_row ( $id, $date, $time, $user_name, $type, $description, $confirmed ) {
+  if ( $confirmed ) {
+    $class = 'enable';
+    $confstr = 'Schválená';
+  } else {
+    $class = 'disable';
+    $confstr = 'Schváliť';
+  }
   return "
   <tr id='request_$id'>
     <td>$date <div>$time</div></td>
-    <td>$user_name ($type)<br><i>$description</i></td>
-    <td onclick='request_set($id);' id='request_check_$id' class='$class'> <span class='fa fa-check'></span> </td>
+    <td>$user_name &ndash; $type<br><span class='desc'>$description</span></td>
+    <td onclick='request_set($id);' id='request_check_$id' class='$class' title='$confstr'><span class='fa fa-check'></span></td>
   </tr>
   ";
 }
