@@ -8,6 +8,16 @@ function sk_format_short_date( $date ) {
   return date("j. n.", strtotime( $date ) );
 }
 
+function format_float_max2dp( $days ) {
+  if (floor($days) == $days) {
+    return floor($days);
+  }
+  if (round($days*100) % 10 == 0) {
+    return sprintf("%.1f", $days);
+  }
+  return sprintf("%.2f", $days);
+}
+
 function sk_days( $num ) {
     if ($num == 1) {
         return "1 deň";
@@ -125,6 +135,10 @@ function edit_date( $y, $m, $type ) {
   if ( $actual_year == $y && $m > $actual_month ) return true;
   if ( ($actual_year == $y && $m == $actual_month) && (!$protection || $actual_day <= $deadline) ) return true;
   return false;
+}
+
+function set_plain_output() {
+  header('Content-Type: text/plain; charset=UTF-8');
 }
 
 ?>

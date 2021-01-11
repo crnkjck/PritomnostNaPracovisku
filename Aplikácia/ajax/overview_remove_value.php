@@ -18,7 +18,7 @@ if ( post(["absence_id"]) ) {
       if ( $day->remove() ) {
         $my_account = User::login();
         echo "<strong>Odstránené: " . $users[$day->user_id]->surname . " " . $users[$day->user_id]->name . "</strong>";
-        echo "<script>$('#holiday_spend').html('$my_account->holidays_spend');</script>";
+        echo "<script>$('#holiday_remaining').html('$my_account->holiday_remaining');</script>";
       }
     }
   }

@@ -15,6 +15,7 @@ class User {
   var $email = "";
   var $last_login = "";
   var $holidays_budget = 0;
+  var $all_holiday_budgets = array();
   var $holidays_spend = 0;
   var $user = false, $request_validator = false, $super_user = false, $admin = false;
 
@@ -35,14 +36,10 @@ class User {
       $user->last_login = $u['last_login'];
     }
 
-    $sql = $conn->query("SELECT from_time, to_time FROM absence WHERE user_id = '$user->id' AND YEAR(date_time) = YEAR(NOW()) AND type = '3'");
-    while ( $time = $sql->fetch_assoc() ) {
-      $user->holidays_spend += holiday_hours_interval( $time["from_time"], $time["to_time"] );
-    }
-
-    $sql = $conn->query("SELECT num FROM holidays_budget WHERE user_id = '$user->id' AND year = YEAR(NOW())");
-    if ( $n = $sql->fetch_assoc() )
-      $user->holidays_budget = $n["num"];
+    $user->holidays_spend = format_float_max2dp($user->get_holiday_spent());
+    $user->holidays_budget = format_float_max2dp($user->get_holiday_allowance());
+    $user->holiday_remaining =
+        format_float_max2dp($user->holidays_budget - $user->holidays_spend);
 
     if ( $user->status > User::STATUS_DISABLED ) $user->user = true;
     if ( $user->status == User::STATUS_SECRETARY ) $user->super_user = true;
@@ -120,10 +117,48 @@ class User {
     return $arr;
   }
 
+  function get_holiday_spent($year = NULL) {
+    global $conn;
+
+    if ($year === NULL) {
+        $year = date("Y");
+    }
+    // suma dovolenkovych dni s presnostou na 1/4 dna (7200 sekund = 8 hodin/4)
+    // rata sa kazdy zacaty stvrtden (ceil)
+    $sql = $conn->query("SELECT CAST(SUM(CEIL(TIMESTAMPDIFF(SECOND, from_time, to_time) / 7200) / 4) AS DECIMAL(5,2)) AS days
+			 FROM absence WHERE user_id = '$this->id' AND YEAR(date_time) = $year AND type = '3'");
+    if ( $n = $sql->fetch_assoc() ) {
+      return $n["days"];
+    }
+    return NULL;
+  }
+
+  function get_holiday_allowance($year = NULL) {
+    global $conn;
+
+    if ($year === NULL) {
+        $year = date("Y");
+    }
+    if ( !array_key_exists($year, $this->all_holiday_budgets) ) {
+      $sql = $conn->query("SELECT num FROM holidays_budget WHERE user_id = '$this->id' AND year = '$year'");
+      if ( $n = $sql->fetch_assoc() ) {
+        $this->all_holiday_budgets[$year] = $n["num"];
+      } else {
+        $this->all_holiday_budgets[$year] = NULL;
+      }
+    }
+    return $this->all_holiday_budgets[$year];
+  }
+
   function holiday_budget_update() {
     global $conn, $actual_year;
 
     if ( $this->id == 0 ) return false;
+
+    // clear the cache
+    if ( array_key_exists($actual_year, $this->all_holiday_budgets) ) {
+      unset($this->all_holiday_budgets[$actual_year]);
+    }
 
     $sql = $conn->query( "SELECT * FROM holidays_budget WHERE user_id = '$this->id' AND year = '$actual_year'" );
 

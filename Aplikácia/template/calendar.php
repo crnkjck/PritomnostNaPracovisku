@@ -9,7 +9,7 @@ function print_calendar($year, $month) {
 }
 
 function print_calendar_holidays_empty () {
-  return "<div class='empty'>V tomto mesiaci nemáte zadanú žiadnu dovolenku...</div>";
+  return "<div class='empty'>V tomto mesiaci ste nežiadali o&nbsp;dovolenku.</div>";
 }
 
 function print_calendar_holidays_value ( $user, $year, $from_time, $to_time, $num_of_days, $request_date ) {
@@ -80,8 +80,8 @@ function print_calendar_set_form ( $count, $days, $single, $year, $month, $date1
   <div class='input_title'>Zverejnenie</div>
 
   <div class='input_value'>
-    <label><input type='radio' name='c_public' value='1' checked><span>Zverejniť</span></label>
-    <label><input type='radio' name='c_public' value='0'><span>Nezverejňovať</span></label>
+    <label><input type='radio' name='c_public' value='1'><span>Zverejniť</span></label>
+    <label><input type='radio' name='c_public' value='0' checked><span>Nezverejňovať</span></label>
   </div>
   <div class='spacer'></div>
 
@@ -114,8 +114,8 @@ function print_calendar_table_tr ($data) {
   return "<tr>$data</tr>";
 }
 
-function print_calendar_holiday_script ( $spend ) {
-  return "<script>$('#holiday_spend').html('$spend');</script>";
+function print_calendar_holiday_script ( $remaining ) {
+  return "<script>$('#holiday_remaining').html('$remaining');</script>";
 }
 
 function print_calendar_table($y, $m, $yL, $mL, $yR, $mR, $data, $personal_id, $admin_str){

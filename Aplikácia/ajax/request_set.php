@@ -15,6 +15,7 @@ if ( post(["id"]) ) {
 
     $check = $conn->query( "UPDATE absence SET confirmation = '$state' WHERE id = '$id'" ) === TRUE;
 
+    set_plain_output();
     if ( $state && $check )
       echo "OK1";
     else if ( $check )

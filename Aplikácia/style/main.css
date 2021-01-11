@@ -239,5 +239,6 @@ font-size: 18px; font-weight: bold;}
 .table_3 table tr td:nth-child(2) { width: 99%; }
 .table_3 table tr td:nth-child(2) input { width: 30px; text-align: center; }
 .table_3 table tr td:nth-child(3) { background-color: #B3231B; color: #FFF; }
-.table_3 table tr td:nth-child(3).disable { background-color: #AAA; }
-.table_3 table tr td:nth-child(3).enable { background-color: #23B31B; }
+.table_3 table tr td:nth-child(3).disable { background-color: #AAA; text-align: center; }
+.table_3 table tr td:nth-child(3).enable { background-color: #23B31B; text-align: center; }
+.desc { color: #777; font-size: 12px; }
