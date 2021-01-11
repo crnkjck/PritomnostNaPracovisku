@@ -8,6 +8,16 @@ function sk_format_short_date( $date ) {
   return date("j. n.", strtotime( $date ) );
 }
 
+function format_float_max2dp( $days ) {
+  if (floor($days) == $days) {
+    return floor($days);
+  }
+  if (round($days*100) % 10 == 0) {
+    return sprintf("%.1f", $days);
+  }
+  return sprintf("%.2f", $days);
+}
+
 function sk_days( $num ) {
     if ($num == 1) {
         return "1 deň";
