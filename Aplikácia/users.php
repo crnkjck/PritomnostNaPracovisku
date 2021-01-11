@@ -22,7 +22,7 @@ foreach ( $users as $u ) {
       $char = first_char($u->surname);
       $data .= print_users_char( $char );
     }
-    $data .= print_users_person( $u->id, $u->name, $u->surname, $u->personal_id, $hidden, $u->holidays_budget, $u->holidays_spend );
+    $data .= print_users_person( $u->id, $u->name, $u->surname, $u->personal_id, $hidden, $u->holidays_budget, $u->holiday_remaining );
 }
 
 echo print_header() . print_users( $data, $status, intval(!$status) ) . print_footer();

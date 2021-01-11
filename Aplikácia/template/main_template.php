@@ -1,10 +1,10 @@
 <?php
 
-function print_header_logged_on ( $name, $surname, $id, $holidays_spend, $holidays_budget ) {
+function print_header_logged_on ( $name, $surname, $id, $holiday_remaining, $holiday_allowance ) {
   return "
   <div class='logged_panel'>
-    <span class='name'>$name $surname <span>#$id</span></span>
-    <span title='Dovolenky'><span class='fa fa-plane'></span> <span id='holiday_spend'>$holidays_spend</span> / $holidays_budget</span>
+    <span class='name'>$name $surname <span class='personal_id'>#$id</span></span>
+    <span>Zostatok dovolenky: <span id='holiday_remaining'>$holiday_remaining</span> / $holiday_allowance</span>
     <a href='profile.php' title='Môj účet'><span class='fa fa-pencil-square-o'></span></a>
     <a href='?logout' title='Odhlásiť sa'><span class='fa fa-sign-out'></span></a>
   </div>
@@ -31,7 +31,7 @@ function print_header_logged_off() {
 function print_header() {
   global $my_account, $actual_year, $actual_month;
 
-  if ( $my_account->status > 0 ) $str = print_header_logged_on($my_account->name, $my_account->surname, $my_account->personal_id, $my_account->holidays_spend, $my_account->holidays_budget);
+  if ( $my_account->status > 0 ) $str = print_header_logged_on($my_account->name, $my_account->surname, $my_account->personal_id, $my_account->holiday_remaining, $my_account->holidays_budget);
   else $str = print_header_logged_off();
 
   $menu_items = array( 'index.php' => "Prehľad" );

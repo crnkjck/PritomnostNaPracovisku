@@ -160,8 +160,8 @@ function print_calendar_table_tr ($data) {
   return "<tr>$data</tr>";
 }
 
-function print_calendar_holiday_script ( $spend ) {
-  return "<script>$('#holiday_spend').html('$spend');</script>";
+function print_calendar_holiday_script ( $remaining ) {
+  return "<script>$('#holiday_remaining').html('$remaining');</script>";
 }
 
 function print_calendar_table($y, $m, $yL, $mL, $yR, $mR, $data, $personal_id, $admin_str){

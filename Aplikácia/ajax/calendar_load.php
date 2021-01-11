@@ -100,7 +100,7 @@ for ( $i = 1; $i <= $num_of_days; $i++ ) {
 if ( !$holidays_data ) $holidays_data = print_calendar_holidays_empty();
 
 // GENEROVANIE HTML KODU
-if ($user->id == $personal_id) echo print_calendar_holiday_script ( $user->holidays_spend );
+if ($user->id == $personal_id) echo print_calendar_holiday_script ( $user->holiday_remaining );
 
 echo print_calendar_table($year, $month, $year_minus, $month_minus, $year_plus, $month_plus, $data, $user->personal_id, $admin_str);
 echo print_calendar_holidays( $holidays_data );
