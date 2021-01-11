@@ -17,7 +17,7 @@ function print_terms( $year, $year_minus, $year_plus, $str ) {
       <table>
         <tr>
           <th>Mesiac</th>
-          <th colspan='2'>Deň v mesiaci, do ktorého treba zadať absenciu</th>
+          <th colspan='2'>Posledný deň na zadanie dovolenky a práceneschopnosti</th>
         </tr>
         $str
       </table>

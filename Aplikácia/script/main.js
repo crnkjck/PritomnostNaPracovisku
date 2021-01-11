@@ -201,8 +201,9 @@ function holiday_paper(button, _personal_id, _year, _from, _to, _num, _request_d
       request_date: _request_date }
     ).done( function( data ) {
       $(button).parent().children('.message').remove();
-      $(button).parent().append("<div class='message print ok'>Lístok bol odoslaný na tlačiareň "
-        + "<small>(" + data + ")</small>"
+      $(button).parent().append("<div class='message print ok'><div>Lístok bol odoslaný na tlačiareň "
+        + "<small>(" + data + ")</small></div>"
+        + "<div><span class='fa fa-warning'></span><strong>Podpíšte</strong> vytlačený lístok. Iba podpísaný lístok je platný.</div>"
         + "</div>");
     }
   ).fail( function( jqXHR ) {

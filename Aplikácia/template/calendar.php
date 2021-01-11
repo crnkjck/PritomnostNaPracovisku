@@ -9,7 +9,7 @@ function print_calendar($year, $month) {
 }
 
 function print_calendar_holidays_empty () {
-  return "<div class='empty'>V tomto mesiaci nemáte zadanú žiadnu dovolenku...</div>";
+  return "<div class='empty'>V tomto mesiaci ste nežiadali o&nbsp;dovolenku.</div>";
 }
 
 function print_calendar_holidays_value ( $user, $year, $from_time, $to_time, $num_of_days, $request_date ) {

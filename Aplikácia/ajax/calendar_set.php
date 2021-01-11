@@ -20,7 +20,7 @@ if ( post(["personal_id"]) && $my_account->status == 2 && intval(post("personal_
 $year = get_year();
 $month = get_month();
 
-// SEKRETARIAT moze pridavat aj za ostatnich
+// SEKRETARIAT moze pridavat aj za ostatnych
 $admin_str = "";
 if ( $my_account->status == 2 ) {
   $admin_str = "Pridávate údaje pre používateľa: <b>$user->surname $user->name</b>";
@@ -77,7 +77,8 @@ if ( post(["is_public", "type", "description"]) ) {
 
   // skontroluje deadline
   if ( !edit_date( $year, $month, $type ) && $my_account->status != 2 ){
-    echo message( "error", "<b>Chyba</b><br>Čas pre pridávanie / editovanie zvolenej absencie už vypršal." );
+    echo message( "error", "<b>Neprítomnosť nemožno zaevidovať</b><br>
+        Čas na pridávanie/editovanie zvoleného druhu neprítomnosti už vypršal. Kontaktujte pani sekretárku." );
   }
   // ak je to dovolenka, skontroluje či má dostatok volnej dovolenky
   else if ( $type == 3 && $user->get_holiday_allowance($year) === NULL && $month != 1 ) {

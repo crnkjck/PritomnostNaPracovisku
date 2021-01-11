@@ -19,7 +19,7 @@ if ( get(["personal_id"]) && $my_account->status == 2 && intval(get("personal_id
 $year = get_year();
 $month = get_month();
 
-// SEKRETARIAT moze pridavat aj za ostatnich
+// SEKRETARIAT moze pridavat aj za ostatnych
 $admin_str = "";
 if ( $my_account->status == 2 ) {
   $users = User::create_all_users();
