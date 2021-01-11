@@ -76,7 +76,7 @@ class Day {
     if ( !edit_date( $this->year, $this->month, $type ) && $my_account->status != 2 ) return false;
 
     $this->confirmation = 1;
-    if ( $type == 2 || $type == 4 ) $this->confirmation = 0;
+    if ( $type == ABSENCE_TRAVEL || $type == ABSENCE_WORKFROMHOME ) $this->confirmation = 0;
 
     $this->type = $type;
     $this->public = $public;
@@ -94,7 +94,7 @@ class Day {
     VALUES ('$this->user_id', '$this->date', '$this->from_time', '$this->to_time', ?, '$this->type', NOW(), '$this->public', '$this->confirmation')" );
     $sql->bind_param('s', $this->description);
 
-    if ( $this->type != 4 && $this->type != 2 ) return $sql->execute();
+    if ( $this->type != ABSENCE_WORKFROMHOME && $this->type != ABSENCE_TRAVEL ) return $sql->execute();
 
     if ( $sql->execute() ) {
       if ( $sending_mails ) {

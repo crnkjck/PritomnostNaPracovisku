@@ -16,7 +16,7 @@ $year_plus = $year + 1;
 
 $sql = $conn->query("SELECT id, user_id, date_time, from_time, to_time, description, type, confirmation,
                     (SELECT u.status FROM users AS u WHERE u.id = user_id) AS user_status
-                    FROM absence WHERE (type = '2' OR type = '4') AND YEAR(date_time) = '$year'
+                    FROM absence WHERE (type = '".ABSENCE_TRAVEL."' OR type = '".ABSENCE_WORKFROMHOME."') AND YEAR(date_time) = '$year'
                     HAVING user_status > 0 ORDER BY confirmation asc, date_time desc");
 
 $str = "";

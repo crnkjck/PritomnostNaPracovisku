@@ -116,25 +116,25 @@ function print_calendar_table_td ( $day, $class, $approved, $type ) {
   global $sk_types;
   $type_icon = "";
   switch ($type) {
-    case ABSENCE_SICK:
+    case ABSENCE_ILL:
       $type_icon = fa_icon("user-md", "fa-fw");
       break;
-    case ABSENCE_JOURNEY:
+    case ABSENCE_TRAVEL:
       $type_icon = fa_icon("briefcase", "fa-fw");
       break;
-    case ABSENCE_LEAVE:
+    case ABSENCE_HOLIDAY:
       $type_icon = fa_icon("plane", "fa-fw");
       break;
-    case ABSENCE_HOMEOFFICE:
+    case ABSENCE_WORKFROMHOME:
       $type_icon = fa_icon("home", "fa-fw");
       break;
     case ABSENCE_OTHER:
       $type_icon = fa_icon("ellipsis-h", "fa-fw");
       break;
-    case ABSENCE_MOTHER:
+    case ABSENCE_MATERNAL:
       $type_icon = fa_icon("female") . fa_icon("child", "small");
       break;
-    case ABSENCE_PARENT:
+    case ABSENCE_PARENTAL:
       $type_icon = fa_icon("female") . fa_icon("child", "small") . fa_icon("male");
       break;
   }
