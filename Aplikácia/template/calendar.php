@@ -80,8 +80,8 @@ function print_calendar_set_form ( $count, $days, $single, $year, $month, $date1
   <div class='input_title'>Zverejnenie</div>
 
   <div class='input_value'>
-    <label><input type='radio' name='c_public' value='1' checked><span>Zverejniť</span></label>
-    <label><input type='radio' name='c_public' value='0'><span>Nezverejňovať</span></label>
+    <label><input type='radio' name='c_public' value='1'><span>Zverejniť</span></label>
+    <label><input type='radio' name='c_public' value='0' checked><span>Nezverejňovať</span></label>
   </div>
   <div class='spacer'></div>
 
