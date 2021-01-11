@@ -60,7 +60,7 @@ function print_header() {
       <meta charset='utf-8'>
       <meta name='viewport' content='width=device-width'>
       <meta name='author' content='TEAM UNKNOWNS - TIS 2017/2018'>
-      <link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Ubuntu:400,400i,700,700i|Open+Sans:400,700&amp;subset=latin,latin-ext' media='all'>
+      <link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Ubuntu:400,400i,700,700i|Open+Sans:400,400i,700&amp;subset=latin,latin-ext' media='all'>
       <link rel='shortcut icon' href='image/favicon.ico' type='image/x-icon'>
       <link rel='stylesheet' href='style/main.css' type='text/css'>
       <script>
