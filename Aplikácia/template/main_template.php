@@ -41,7 +41,7 @@ function print_header() {
   if ( $my_account->status >= 2 ) {
     $menu_items['users.php'] = 'Používatelia';
     $menu_items['terms.php'] = 'Termíny';
-    $menu_items['events.php'] = 'Udalosti';
+    $menu_items['events.php'] = 'Voľné dni';
   }
   if ( $my_account->request_validator ) {
     $menu_items['requests.php'] = 'Žiadosti';

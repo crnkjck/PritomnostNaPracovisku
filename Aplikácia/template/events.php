@@ -3,7 +3,7 @@
 function print_events( $year, $year_minus, $year_plus ) {
   return "
   <div class='content' id='events'>
-    <div class='title_1'>Udalosti
+    <div class='title_1'>Voľné dni
       <div class='subtitle'>
           <a href='events.php?year=$year_minus' title='$year_minus'><span class='fa fa-chevron-circle-left'></span></a>
           $year
@@ -14,8 +14,8 @@ function print_events( $year, $year_minus, $year_plus ) {
     <div id='info_container'></div>
 
     <div class='add'>
-      <div class='title'>Pridať udalosť pre rok $year</div>
-      Popis: <input type='text' name='description' placeholder='Zadajte popis udalosti'><br>
+      <div class='title'>Pridať voľný deň pre rok $year</div>
+      Popis: <input type='text' name='description' placeholder='Zadajte popis voľného dňa'><br>
       Dátum: <input type='text' name='day' placeholder='dd'> . <input type='text' name='month' placeholder='mm'> . $year
       <div class='info'><span class='fa fa-info-circle'></span> Všetky záznamy pridané používateľmi pre tento deň budú odstránené.</div>
       <div class='button_submit' onclick='event_add($year);'>Pridať</div>
@@ -34,7 +34,7 @@ function print_events_table( $str ) {
   <table>
     <tr>
       <th>Dátum</th>
-      <th colspan='2'>Popis udalosti</th>
+      <th colspan='2'>Popis voľného dňa</th>
     </tr>
     $str
   </table>
