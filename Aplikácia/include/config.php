@@ -40,5 +40,6 @@ else $deadline = 20;
 function e($var) { echo $var; }
 
 require "functions.php";
+require "sha1sums.php";
 
 ?>
