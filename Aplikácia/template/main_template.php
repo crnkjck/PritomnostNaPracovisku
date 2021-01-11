@@ -29,7 +29,7 @@ function print_header_logged_off() {
 }
 
 function print_header() {
-  global $my_account, $actual_year, $actual_month;
+  global $my_account, $actual_year, $actual_month, $sha1sums;
 
   if ( $my_account->status > 0 ) $str = print_header_logged_on($my_account->name, $my_account->surname, $my_account->personal_id, $my_account->holiday_remaining, $my_account->holidays_budget);
   else $str = print_header_logged_off();
@@ -62,14 +62,15 @@ function print_header() {
       <meta name='author' content='TEAM UNKNOWNS - TIS 2017/2018'>
       <link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Ubuntu:400,400i,700,700i|Open+Sans:400,400i,700&amp;subset=latin,latin-ext' media='all'>
       <link rel='shortcut icon' href='image/favicon.ico' type='image/x-icon'>
-      <link rel='stylesheet' href='style/main.css' type='text/css'>
+      <link rel='stylesheet' href='style/main.css?${sha1sums['main.css']}' type='text/css'>
       <script>
         var user_id = 0;
         var m = $actual_month;
         var y = $actual_year;
       </script>
       <script src='script/jquery2.min.js'></script>
-      <script src='script/main.js'></script>
+
+      <script src='script/main.js?${sha1sums['main.js']}'></script>
       <title>Dochádzka KAI</title>
     </head>
 
