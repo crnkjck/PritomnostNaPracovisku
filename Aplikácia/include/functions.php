@@ -38,9 +38,6 @@ function display_time( $from, $to ) {
 }
 
 function message ( $type, $text, $hidder = 0 ) {
-  global $my_account;
-  if ( $my_account->status == 0 ) return "";
-
   $icon = "";
   if ( $type == "error" ) $icon = "fa-exclamation-triangle";
   if ( $type == "info" ) $icon = "fa-info-circle";

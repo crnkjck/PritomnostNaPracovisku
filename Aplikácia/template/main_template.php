@@ -52,10 +52,12 @@ function print_header() {
         ($href == basename($_SERVER['PHP_SELF']) ? " class='active'" : "") .
         "><a href='$href'>$label</a></li>";
     }, array_keys($menu_items), $menu_items));
-  $message = "";
+  $session_message = "";
   if ( array_key_exists("message", $_SESSION) ) {
-    $message = message($_SESSION["message"]["type"],
-      $_SESSION["message"]["text"], $_SESSION["message"]["hidder"]);
+    $session_message = "<div class='content'>".
+      message($_SESSION["message"]["type"],
+        $_SESSION["message"]["text"], $_SESSION["message"]["hidder"]).
+      "</div>";
     unset($_SESSION["message"]);
   }
 
@@ -100,7 +102,7 @@ function print_header() {
           </ul>
         </nav>
       </header>
-      $message
+      $session_message
   ";
 }
 

@@ -9,13 +9,18 @@ function print_index_person ( $id, $name, $surname, $personal_id ) {
 }
 
 function print_index( $persons, $y, $m ) {
-  global $deadline;
+  global $deadline, $my_account;
 
+  $deadline_notice = $my_account->user
+    ? message( "info", "<b>Dovolenku a práceneschopnosť za tento mesiac
+      môžete pridávať a&nbsp;editovať do $deadline. dňa.</b><br>
+      Po tomto dni sa obráťte na pani sekretárku.
+      Neprítomnosť z&nbsp;ostatných dôvodov je možné zadávať do konca
+      mesiaca." )
+    : "";
   return "
   <div class='content' id='overview'>
-
-    ".message( "info", "<b>V tomto mesiaci môžete svoju dovolenku a&nbsp;práceneschopnosť pridávať a&nbsp;editovať do $deadline. dňa.</b> <br> Po tomto dni sa obráťte na pani sekretárku. Neprítomnosť z&nbsp; ostatných dôvodov je možné zadávať do konca mesiaca." )."
-
+    $deadline_notice
     <div class='side_table'>
       <div class='title'>Prehľad zamestnancov</div>
       $persons

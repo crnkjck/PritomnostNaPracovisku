@@ -81,12 +81,12 @@ class User {
       }
       $_SESSION["message"] = [
         "type" => "error",
-        "message" => "Zadali ste neplatné používateľské meno,".
-          " nesprávne heslo, alebo je váš účet deaktivovaný.<br>".
-          " Kontaktujte sekretariát alebo IT tajomníka katedry.",
+        "text" => "<b>Neúspešný pokus o prihlásenie.</b><br>
+          Zadali ste neplatné používateľské meno,
+          nesprávne heslo, alebo je váš účet deaktivovaný.",
         "hidder" => true
       ];
-      header('Location: index.php', 401);
+      header('Location: index.php');
       exit();
     }
 
@@ -107,10 +107,11 @@ class User {
     else {
       $_SESSION["message"] = [
         "type" => "error",
-        "message" => "Na prístup k tejto funkcii nemáte oprávnenie.",
+        "text" => "<b>Prístup zamietnutý.</b><br>
+          Na prístup k požadovanej funkcii nemáte oprávnenie.",
         "hidder" => true
       ];
-      header('Location: index.php', true, 403);
+      header('Location: index.php');
       exit();
     }
     return $user;
