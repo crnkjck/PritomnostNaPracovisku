@@ -17,7 +17,7 @@ class User {
   var $holidays_budget = 0;
   var $all_holiday_budgets = array();
   var $holidays_spend = 0;
-  var $user = false, $request_validator = false, $super_user = false, $admin = false;
+  var $user = false, $request_validator = false, $super_user = false, $admin = false, $privileged = false;
 
   static function get( $personal_id ) {
     global $conn, $request_validators;
@@ -41,11 +41,11 @@ class User {
     $user->holiday_remaining =
         format_float_max2dp($user->holidays_budget - $user->holidays_spend);
 
-    if ( $user->status > User::STATUS_DISABLED ) $user->user = true;
-    if ( $user->status == User::STATUS_SECRETARY ) $user->super_user = true;
-    if ( $user->status == User::STATUS_ADMINISTRATOR ) $user->admin = true;
-
-    if ( in_array($user->personal_id, $request_validators) ) $user->request_validator = true;
+    $user->user = ($user->status > User::STATUS_DISABLED);
+    $user->privileged = ($user->status > User::STATUS_REGULAR);
+    $user->super_user = ($user->status == User::STATUS_SECRETARY);
+    $user->admin = ($user->status == User::STATUS_ADMINISTRATOR);
+    $user->request_validator = in_array($user->personal_id, $request_validators);
 
     return $user;
   }
@@ -76,8 +76,18 @@ class User {
           $_SESSION["personal_id"] = $p_id;
           $_SESSION["token"] = $token;
           header('Location: index.php');
+          exit();
         }
       }
+      $_SESSION["message"] = [
+        "type" => "error",
+        "message" => "Zadali ste neplatné používateľské meno,".
+          " nesprávne heslo, alebo je váš účet deaktivovaný.<br>".
+          " Kontaktujte sekretariát alebo IT tajomníka katedry.",
+        "hidder" => true
+      ];
+      header('Location: index.php', 401);
+      exit();
     }
 
     if ( session(["token", "personal_id"]) ) {
@@ -95,7 +105,12 @@ class User {
     if ( $user->status >= $security && ( !$request_validation || $user->request_validator ) )
       return $user;
     else {
-      header('Location: index.php');
+      $_SESSION["message"] = [
+        "type" => "error",
+        "message" => "Na prístup k tejto funkcii nemáte oprávnenie.",
+        "hidder" => true
+      ];
+      header('Location: index.php', true, 403);
       exit();
     }
     return $user;
