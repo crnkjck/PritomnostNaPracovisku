@@ -176,7 +176,7 @@ footer .about { color: #FFBD43; float: right; cursor: pointer; }
 
 /* CALENDAR */
 #calendar .side_table { margin-top: 15px; }
-#calendar_table { margin: 20px 0px; width: 100%; table-layout: fixed; text-align: center; font-weight: bold; font-size: 15px; }
+#calendar_table { margin: 20px 0px; width: 100%; table-layout: fixed; text-align: center; font-weight: bold; font-size: 15px; line-height: 20px; }
 
 #calendar_table tr:first-child { color: #FFF; }
 #calendar_table tr:nth-child(2) { color: #AAA; }
@@ -188,8 +188,8 @@ footer .about { color: #FFBD43; float: right; cursor: pointer; }
 #calendar_table td.weekend { background-color: #AAA; }
 #calendar_table td.absence { background-color: #B3231B; color: white; }
 #calendar_table td.holiday { background-color: #FFBD43; }
-.absence-type-icon { position: absolute; left: 8px; }
-.approval-icon { position: absolute; right: 8px; }
+.absence-type-icon { position: absolute; left: 8px; line-height: inherit; }
+.approval-icon { position: absolute; right: 8px; line-height: inherit; }
 .small { font-size: 80%; }
 
 
