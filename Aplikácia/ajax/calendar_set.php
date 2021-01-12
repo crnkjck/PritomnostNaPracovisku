@@ -117,7 +117,7 @@ else {
   $types_str = "";
   foreach ( $sk_types as $key => $value ) {
     $ch = "";
-    if ( $key == 1 ) $ch = "checked";
+    if ( $key == ABSENCE_HOLIDAY ) $ch = "checked";
     $types_str .= print_calendar_set_form_types ( $key, $value, $ch );
   }
 
