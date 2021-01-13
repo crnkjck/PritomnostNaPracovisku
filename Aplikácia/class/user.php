@@ -117,6 +117,17 @@ class User {
     return $user;
   }
 
+  static function get_users( $min_status = User::STATUS_REGULAR,
+                             $max_status = 10000 ) {
+    global $conn;
+    $stm = $conn->prepare("
+        SELECT id, personal_id, username, name, surname, email, status FROM users
+        WHERE status >= ? AND status < ?
+        ORDER BY surname");
+    if ( !$stm->bind_param("ii", $min_status, $max_status) ) return [];
+    return execute_stm_and_fetch_all( $stm );
+  }
+
   static function create_all_users( $status = User::STATUS_REGULAR ) {
     global $conn;
 

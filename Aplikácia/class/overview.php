@@ -116,6 +116,35 @@ class Overview {
     }
     return "";
   }
+
+  static function get_absences( $year, $month ) {
+    global $conn;
+    $stm = $conn->prepare("
+      SELECT user_id, DAY(date_time) as day, from_time, to_time,
+        type, description, public
+      FROM absence JOIN users ON user_id = users.id
+      WHERE YEAR(date_time) = ?
+        AND MONTH(date_time) = ?
+        AND users.status >= ?
+      ORDER BY user_id, date_time");
+    if ( !$stm ) return $conn->$error;
+    $regular = User::STATUS_REGULAR; // must be passable by reference
+    if ( !$stm || !$stm->bind_param("iii", $year, $month, $regular) )
+      return $conn->$error;
+    return execute_stm_and_fetch_all( $stm );
+  }
+
+  static function get_holidays( $year, $month ) {
+    global $conn;
+    $stm = $conn->prepare("
+      SELECT DAY(date_time) as day, description FROM holidays
+      WHERE YEAR(date_time) = ?
+        AND MONTH(date_time) = ?
+      ORDER BY date_time");
+    if ( !$stm->bind_param("ii", $year, $month) ) return [];
+    return execute_stm_and_fetch_all( $stm );
+  }
+
 }
 
 ?>
