@@ -6,7 +6,7 @@ require 'class/user.php';
 require 'template/main_template.php';
 require 'template/events.php';
 
-$my_account = User::login(2);
+$my_account = User::login(User::STATUS_SECRETARY);
 
 $year = get_year();
 $year_minus = $year - 1;

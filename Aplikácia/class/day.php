@@ -73,7 +73,7 @@ class Day {
     if ( $this->type || $this->holiday ) return false;
     if ( strtotime("$this->date $from_time") > strtotime("$this->date $to_time") ) return false;
     if ( $type <= 0 || $type > sizeof($sk_types) ) return false;
-    if ( !edit_date( $this->year, $this->month, $type ) && $my_account->status != 2 ) return false;
+    if ( !edit_date( $this->year, $this->month, $type ) && !$my_account->secretary ) return false;
 
     $this->confirmation = 1;
     if ( $type == ABSENCE_TRAVEL || $type == ABSENCE_WORKFROMHOME ) $this->confirmation = 0;

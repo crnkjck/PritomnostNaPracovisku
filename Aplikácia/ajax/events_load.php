@@ -5,7 +5,7 @@ require '../class/user.php';
 require '../template/events.php';
 
 // kontrola statusu prihláseného používateľa
-$my_account = User::login(2);
+$my_account = User::login(User::STATUS_SECRETARY);
 
 // nastav rok ( ak je neplatny nastavi aktualny rok )
 $year = get_year();

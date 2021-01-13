@@ -6,11 +6,11 @@ require '../class/day.php';
 require '../template/calendar.php';
 
 // kontrola statusu prihláseného používateľa
-$my_account = User::login(1);
+$my_account = User::login(User::STATUS_REGULAR);
 $personal_id = $my_account->id;
 $user = $my_account;
 
-if ( get(["personal_id"]) && $my_account->status == 2 && intval(get("personal_id")) > 0 ) {
+if ( get(["personal_id"]) && $my_account->secretary && intval(get("personal_id")) > 0 ) {
   $personal_id = intval( get("personal_id") );
   $user = User::get( $personal_id );
 }
@@ -21,7 +21,7 @@ $month = get_month();
 
 // SEKRETARIAT moze pridavat aj za ostatnych
 $admin_str = "";
-if ( $my_account->status == 2 ) {
+if ( $my_account->secretary ) {
   $users = User::create_all_users();
 
   $admin_str = " Vyberte používateľa (pokiaľ nerobíte vlastný zápis): <select id='users_dropdown' onchange='user_switch($year, $month, this);'>

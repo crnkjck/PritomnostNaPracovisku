@@ -12,7 +12,7 @@ require "class/user.php";
 require 'template/main_template.php';
 require "template/profile.php";
 
-$my_account = User::login(1);
+$my_account = User::login(User::STATUS_REGULAR);
 
 echo print_header();
 

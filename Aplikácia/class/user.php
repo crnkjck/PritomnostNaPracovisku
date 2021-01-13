@@ -17,7 +17,7 @@ class User {
   var $holidays_budget = 0;
   var $all_holiday_budgets = array();
   var $holidays_spend = 0;
-  var $user = false, $request_validator = false, $super_user = false, $admin = false, $privileged = false;
+  var $user = false, $request_validator = false, $secretary = false, $admin = false, $privileged = false;
 
   static function get( $personal_id ) {
     global $conn, $request_validators;
@@ -43,7 +43,7 @@ class User {
 
     $user->user = ($user->status > User::STATUS_DISABLED);
     $user->privileged = ($user->status > User::STATUS_REGULAR);
-    $user->super_user = ($user->status == User::STATUS_SECRETARY);
+    $user->secretary = ($user->status == User::STATUS_SECRETARY);
     $user->admin = ($user->status == User::STATUS_ADMINISTRATOR);
     $user->request_validator = in_array($user->personal_id, $request_validators);
 

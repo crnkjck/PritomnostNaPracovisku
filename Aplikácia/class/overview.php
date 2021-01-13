@@ -38,7 +38,7 @@ class Overview {
         $day = new Day( $a["day"], $this->m, $this->y, $a["user_id"] );
 
         if (isset($my_account)) {
-          if ( $day->public == 1 || $my_account->status > 0 ) {
+          if ( $day->public == 1 || $my_account->user ) {
             if ( !isset( $this->days[ $a["day"] ] ) )
               $this->days[ $a["day"] ] = [];
 
@@ -78,8 +78,9 @@ class Overview {
         $vals = "";
 
         foreach ( $absences as $a ) {
-          // zobraz iba schvalen (alebo moje alebo admin)
-          if ( $a->confirmation || $my_account->id == $a->user_id || $my_account->super_user || $my_account->request_validator ) {
+          // zobraz iba schvalene (okrem mna, sekretarky a schvalovatela)
+          if ( $a->confirmation || $my_account->id == $a->user_id ||
+               $my_account->secretary || $my_account->request_validator ) {
             $state = "";
             if ( !$a->confirmation ) $state = " <strong>(zatiaľ neschválené)</strong>";
 
@@ -107,12 +108,12 @@ class Overview {
     global $my_account;
 
     if (!isset($my_account) || !isset($a)) return "";
-    // button ukaz iba pri mojich udalostiach (alebo admin)
-    if ( ($my_account->id == $a->user_id ||
-          $my_account->super_user) &&
-         (edit_date( $a->year, $a->month, $a->type ) ||
-          $my_account->status == 2) )
+    // button ukaz iba pri mojich udalostiach (alebo sekretarke)
+    if ( ( $my_account->id == $a->user_id &&
+            edit_date( $a->year, $a->month, $a->type ) ) ||
+          $my_account->secretary ) {
       return print_overview_box_value_remove ( $this->y, $this->m, $name, $surname, $a->absence_id, $this->personal_id );
+    }
     return "";
   }
 }

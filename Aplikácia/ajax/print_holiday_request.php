@@ -28,7 +28,7 @@ $personal_id = intval($my_account->personal_id);
 $user = $my_account;
 
 if ( post(["personal_id"]) &&
-    $my_account->status == User::STATUS_SECRETARY &&
+    $my_account->secretary &&
     intval(post("personal_id")) > 0 ) {
   $personal_id = intval( post("personal_id") );
   $user = User::get( $personal_id );

@@ -4,7 +4,7 @@ require '../include/config.php';
 require '../class/user.php';
 
 // kontrola statusu prihláseného používateľa
-$my_account = User::login(2);
+$my_account = User::login(User::STATUS_SECRETARY);
 
 // osobne cislo pouzivatela ktoreho editujeme
 if ( get(["personal_id"]) ) $p_id = intval( get("personal_id") );

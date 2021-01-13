@@ -31,14 +31,14 @@ function print_header_logged_off() {
 function print_header() {
   global $my_account, $actual_year, $actual_month, $sha1sums;
 
-  if ( $my_account->status > 0 ) $str = print_header_logged_on($my_account->name, $my_account->surname, $my_account->personal_id, $my_account->holiday_remaining, $my_account->holidays_budget);
+  if ( $my_account->user ) $str = print_header_logged_on($my_account->name, $my_account->surname, $my_account->personal_id, $my_account->holiday_remaining, $my_account->holidays_budget);
   else $str = print_header_logged_off();
 
   $menu_items = array( 'index.php' => "Prehľad" );
-  if ( $my_account->status > 0 ) {
+  if ( $my_account->user ) {
     $menu_items['calendar.php'] = 'Vaša neprítomnosť';
   }
-  if ( $my_account->status >= 2 ) {
+  if ( $my_account->privileged ) {
     $menu_items['users.php'] = 'Používatelia';
     $menu_items['terms.php'] = 'Termíny';
     $menu_items['events.php'] = 'Voľné dni';

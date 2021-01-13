@@ -6,12 +6,12 @@ require '../class/day.php';
 require '../template/calendar.php';
 
 // kontrola statusu prihláseného používateľa
-$my_account = User::login(1);
+$my_account = User::login(User::STATUS_REGULAR);
 $personal_id = $my_account->id;
 $user = $my_account;
 
 // pridavanie zapisu pre niekoho ineho (ak si sekretar)
-if ( post(["personal_id"]) && $my_account->status == 2 && intval(post("personal_id")) > 0 ) {
+if ( post(["personal_id"]) && $my_account->secretary && intval(post("personal_id")) > 0 ) {
   $personal_id = intval( post("personal_id") );
   $user = User::get( $personal_id );
 }
@@ -22,7 +22,7 @@ $month = get_month();
 
 // SEKRETARIAT moze pridavat aj za ostatnych
 $admin_str = "";
-if ( $my_account->status == 2 ) {
+if ( $my_account->secretary ) {
   $admin_str = "Pridávate údaje pre používateľa: <b>$user->surname $user->name</b>";
 }
 
@@ -76,7 +76,7 @@ if ( post(["is_public", "type", "description"]) ) {
   }
 
   // skontroluje deadline
-  if ( !edit_date( $year, $month, $type ) && $my_account->status != 2 ){
+  if ( !edit_date( $year, $month, $type ) && !$my_account->secretary ){
     echo message( "error", "<b>Neprítomnosť nemožno zaevidovať</b><br>
         Čas na pridávanie/editovanie zvoleného druhu neprítomnosti už vypršal. Kontaktujte pani sekretárku." );
   }

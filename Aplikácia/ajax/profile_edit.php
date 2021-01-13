@@ -4,7 +4,7 @@ require '../include/config.php';
 require '../class/user.php';
 
 // kontrola statusu prihláseného používateľa
-$my_account = User::login(1);
+$my_account = User::login(User::STATUS_REGULAR);
 
 if ( post(["username", "email", "password_new_1", "password_new_2", "password"]) ) {
   $username = post("username");

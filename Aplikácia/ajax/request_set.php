@@ -3,8 +3,10 @@
 require '../include/config.php';
 require '../class/user.php';
 
-// kontrola statusu prihláseného používateľa ( 1,1 = vedúci katedry )
-$my_account = User::login(1,1);
+// kontrola statusu prihláseného používateľa
+// (prihlásený používateľ v zozname potvrdzovačov žiadostí,
+// typicky vedúci katedry )
+$my_account = User::login(User::STATUS_REGULAR, true);
 
 if ( post(["id"]) ) {
   $id = intval( post("id") );

@@ -6,7 +6,7 @@ require 'class/user.php';
 require 'template/main_template.php';
 require 'template/users.php';
 
-$my_account = User::login(2);
+$my_account = User::login(User::STATUS_SECRETARY);
 
 $status = 1;
 if ( get(["deactivated"]) ) $status = 0;
