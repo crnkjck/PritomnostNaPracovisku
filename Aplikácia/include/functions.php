@@ -125,7 +125,7 @@ function first_char( $str ) {
 function edit_date( $y, $m, $type ) {
   global $deadline, $actual_year, $actual_month, $actual_day;
 
-  if ( $type == 1 || $type == 3 ) $protection = true;
+  if ( $type == ABSENCE_ILL || $type == ABSENCE_HOLIDAY ) $protection = true;
   else $protection = false;
 
   if ( $actual_year < $y ) return true;

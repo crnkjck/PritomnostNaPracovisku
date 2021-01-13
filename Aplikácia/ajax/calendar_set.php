@@ -81,11 +81,11 @@ if ( post(["is_public", "type", "description"]) ) {
         Čas na pridávanie/editovanie zvoleného druhu neprítomnosti už vypršal. Kontaktujte pani sekretárku." );
   }
   // ak je to dovolenka, skontroluje či má dostatok volnej dovolenky
-  else if ( $type == 3 && $user->get_holiday_allowance($year) === NULL && $month != 1 ) {
+  else if ( $type == ABSENCE_HOLIDAY && $user->get_holiday_allowance($year) === NULL && $month != 1 ) {
     echo message( "error", "<b>Dovolenku nemožno zaevidovať</b><br>
         Pre rok $year ešte táto aplikácia nepozná váš nárok na dovolenku. Môžete žiadať iba o&nbsp;januárovú dovolenku." );
   }
-  else if ( $type == 3 && $user->get_holiday_allowance($year) !== NULL &&
+  else if ( $type == ABSENCE_HOLIDAY && $user->get_holiday_allowance($year) !== NULL &&
             $user->get_holiday_allowance($year) < $user->get_holiday_spent($year) + $holidays_num ) {
     $remaining = $user->get_holiday_allowance($year) - $user->get_holiday_spent($year);
     echo message( "error", "<b>Dovolenku nemožno zaevidovať</b><br>
@@ -97,7 +97,7 @@ if ( post(["is_public", "type", "description"]) ) {
       $result = $d->set( $type, $public, $description, $from_time, $to_time );
       if ( $result ) $d->insert();
     }
-    if ( $type == 3 && $user->get_holiday_allowance($year) === NULL ) {
+    if ( $type == ABSENCE_HOLIDAY && $user->get_holiday_allowance($year) === NULL ) {
       echo message( "info", "<b>Zapísali ste si dovolenku na rok $year, pre ktorý táto aplikácia ešte nepozná váš nárok na dovolenku.</b><br/>Uistite sa, že ste svoj nárok neprekročili." );
     }
     echo print_calendar_inserted_script ($year, $month, $user->personal_id);
