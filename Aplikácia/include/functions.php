@@ -138,4 +138,21 @@ function set_plain_output() {
   header('Content-Type: text/plain; charset=UTF-8');
 }
 
+function exec_or_die($cmd, $args) {
+  $cmd = join(" ", array_merge(
+    [ escapeshellcmd($cmd) ],
+    array_map('escapeshellarg', $args)
+  ));
+  $output = array();
+  $return_val = 0;
+  $lastline = exec($cmd . ' 2>&1', $output, $return_val);
+  if ($return_val != 0) {
+    error_log("Failed to execute: $cmd");
+    error_log(join("\n", $output));
+    header("HTTP/1.0 500 Internal server error");
+    exit($return_val);
+  }
+  return array($lastline, $output);
+}
+
 ?>
