@@ -4,6 +4,7 @@ import json
 import sys
 import openpyxl
 from openpyxl.styles import PatternFill, Color
+from openpyxl.comments import Comment
 import re
 from calendar import Calendar
 from datetime import time, timedelta
@@ -47,7 +48,7 @@ class Absence:
     STUDIUM = 'štúdium popri zamestnaní'
     PRACA_DOMA = 'práca doma'
     PRACOVNA_CESTA = 'pracovná cesta'
-    CATEGORIZE_MANUALLY = 'zaradiť manuálne'
+    INA_NEPRITOMNOST = 'iná neprítomnosť'
 
     counts_as_work = {
         SKOLENIE: True,
@@ -61,7 +62,7 @@ class Absence:
         2: PRACOVNA_CESTA,
         3: DOVOLENKA,
         4: PRACA_DOMA,
-        5: CATEGORIZE_MANUALLY,
+        5: INA_NEPRITOMNOST,
         6: MATERSKA,
         7: RODICOVSKA
     }
@@ -82,8 +83,7 @@ class Absence:
         VSEOBECNE_PREKAZKY: 'Z',
         NAHRADNE_VOLNO: 'Nv',
         SKOLENIE: 'Šk',
-        STUDIUM: 'Št',
-        CATEGORIZE_MANUALLY: '?'
+        STUDIUM: 'Št'
     }
 
 class OverviewSheetBuilder:
@@ -123,6 +123,8 @@ class OverviewSheetBuilder:
     WEEKEND_FILL = PUBLIC_HOLIDAY_FILL
 
     PRESENCE_VALUE = '/'
+
+    CATEGORIZE_MANUALLY_VALUE = '?'
 
     WORK_DAY_HOURS = 8
     WORK_DAY_FRACTION_DENOMINATOR = 4
@@ -177,19 +179,19 @@ class OverviewSheetBuilder:
         prefix_re = re.compile('^' + self.personal_id_prefix)
         for row in range(self.FIRST_ROW, self.FIRST_ROW + self.ROWS_PER_SHEET):
             employee = next(employees)
+            full_name = '{} {}'.format(employee['surname'], employee['name'])
             ws.cell(row, 1).value = int(prefix_re.sub('',
                 str(employee['personal_id'])))
-            ws.cell(row, 2).value = '{} {}'.format(
-                employee['surname'],
-                employee['name']
-            )
-            (presence_days, absence_totals) = \
-                self.fill_in_days(row, employee['id'], ws)
-            self.fill_in_totals(row, presence_days, absence_totals, ws)
+            ws.cell(row, 2).value = full_name
+            (presence_days, absence_totals, categorize_manually) = \
+                self.fill_in_days(row, employee['id'], full_name, ws)
+            self.fill_in_totals(row, presence_days, absence_totals,
+                                categorize_manually, ws)
 
-    def fill_in_days(self, row, employee_id, ws):
-        absence_totals = self.init_absence_totals()
+    def fill_in_days(self, row, employee_id, full_name, ws):
         presence_days = 0
+        absence_totals = self.init_absence_totals()
+        categorize_manually = 0
         absences = (self.absences[employee_id]
             if employee_id in self.absences
             else {})
@@ -222,23 +224,26 @@ class OverviewSheetBuilder:
                     cell.value = maybe_presence + Absence.abbreviation[kind]
                 elif kind in Absence.counts_as_work:
                     cell.value = self.PRESENCE_VALUE
-                elif kind in Absence.counts_as_work:
-                    cell.value = (maybe_presence +
-                        Absence.abbreviation[Absence.OSTATNE])
+                else:
+                    cell.value = maybe_presence + self.CATEGORIZE_MANUALLY_VALUE
+                    cell.comment = Comment(
+                        '{}: {}'.format(kind, absence['description']),
+                        full_name
+                    )
                 if kind in Absence.counts_as_work:
                     presence_days += duration
                 elif kind in absence_totals:
                     absence_totals[kind] += duration
                 else:
-                    absence_totals[Absence.abbreviation[Absence.OSTATNE]] \
-                        += duration
-                presence_days += 1-duration
+                    categorize_manually += duration
+                presence_days += 1 - duration
                 continue
             cell.value = self.PRESENCE_VALUE
             presence_days += 1
-        return (presence_days, absence_totals)
+        return (presence_days, absence_totals, categorize_manually)
 
-    def fill_in_totals(self, row, presence_days, absence_totals, ws):
+    def fill_in_totals(self, row, presence_days, absence_totals,
+                       categorize_manually, ws):
         ws.cell(row, self.WORK_DAYS_COL).value = presence_days
         col = self.FIRST_ABSENCE_KIND_COL
         for kind in self.ABSENCE_KINDS_ORDER:
@@ -250,14 +255,13 @@ class OverviewSheetBuilder:
                 ws.cell(row, self.FIRST_ABSENCE_KIND_COL).coordinate,
                 ws.cell(row, self.FIRST_ABSENCE_KIND_COL +
                         len(self.ABSENCE_KINDS_ORDER) - 1).coordinate)
-        if absence_totals[Absence.CATEGORIZE_MANUALLY] > 0:
+        if categorize_manually > 0:
             ws.cell(row, self.CATEGORIZE_MANUALLY_COL).value =\
-                '{}?'.format(absence_totals[Absence.CATEGORIZE_MANUALLY])
+                '{}?'.format(categorize_manually)
 
     def init_absence_totals(self):
         return dict((absenceType, 0)
-            for absenceType
-            in self.ABSENCE_KINDS_ORDER + [Absence.CATEGORIZE_MANUALLY])
+            for absenceType in self.ABSENCE_KINDS_ORDER)
 
     def work_day_fraction_from_delta(self, d: timedelta) -> float:
         return (ceil(d.total_seconds() * self.WORK_DAY_FRACTION_DENOMINATOR
