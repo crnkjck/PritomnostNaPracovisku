@@ -57,10 +57,13 @@ class Overview {
 
     // zobrazit titulok s posuvacom mesiacov ??
     if ( $title ) {
-      list($year_minus, $month_minus) = month_minus($this->y, $this->m);
-      list($year_plus, $month_plus) = month_plus($this->y, $this->m);
       // vypis nazvu mesiaca a sipok
-      $str .= print_overview_title( $sk_months[ $this->m ], $this->y, $year_minus, $month_minus, $year_plus, $month_plus);
+      $str .= print_overview_title(
+        $this->m, $this->y,
+        // stiahnutie vykazu
+        ($my_account->secretary && $this->user_id == 0)
+          ? print_report_link( $this->m, $this->y )
+          : '');
       // vypis mena ak je zapnuty filter
       if ( $this->user_id != 0 )
         $str .= print_overview_filter ( $users[$this->user_id]->name, $users[$this->user_id]->surname );

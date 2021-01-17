@@ -1,12 +1,28 @@
 <?php
 
-function print_overview_title ( $month_name, $year, $year_minus, $month_minus, $year_plus, $month_plus) {
+function print_overview_title ( $month, $year, $additional_content = "") {
+  global $sk_months;
+  list($year_minus, $month_minus) = month_minus($year, $month);
+  list($year_plus, $month_plus) = month_plus($year, $month);
+
   return "
   <div class='title'>
     <span class='fa fa-chevron-left' onclick='slide_overview($year_minus, $month_minus);'></span>
-      $month_name $year
+      ${sk_months[$month]} $year
     <span class='fa fa-chevron-right' onclick='slide_overview($year_plus, $month_plus);'></span>
+    $additional_content
   </div>
+  ";
+}
+
+function print_report_link ( $month, $year ) {
+  global $main_url;
+  $month = urlencode($month);
+  $year = urlencode($year);
+  return "<a class='button_submit button_download' href='${main_url}tools/monthly-report.php?month=$month&year=$year'
+      ><i class='fa fa-file-excel-o'></i>
+    Stiahnuť výkaz
+   </a>
   ";
 }
 
