@@ -134,7 +134,7 @@ class Overview {
     return execute_stm_and_fetch_all( $stm );
   }
 
-  static function get_holidays( $year, $month ) {
+  static function get_public_holidays( $year, $month ) {
     global $conn;
     $stm = $conn->prepare("
       SELECT DAY(date_time) as day, description FROM holidays

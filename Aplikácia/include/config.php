@@ -15,6 +15,7 @@ $printer_options = ['landscape', 'PageSize=A6'];
 
 $department = 'Katedra aplikovanej informatiky';
 $department_id = '107240';
+$personal_id_prefix = '107';
 
 $sk_months = ["", "Január", "Február", "Marec", "Apríl", "Máj", "Jún", "Júl", "August", "September", "Október", "November", "December"];
 $sk_days = ["", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota", "Nedela"];
