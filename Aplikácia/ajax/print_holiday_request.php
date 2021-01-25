@@ -41,7 +41,7 @@ $texcmds = array_map(function ($key, $value) {
     },
     array_keys($data), $data);
 
-$jobname = preg_replace('/[^a-zA-Z0-9]/', '-', $user->username);
+$jobname = preg_replace('/[^a-zA-Z0-9]/u', '-', $user->username);
 list($tmpdir, $etc) = exec_or_die(
     "mktemp",
     ["--directory", "--tmpdir", "pritomnost.$jobname.XXXXXXXXXX"]

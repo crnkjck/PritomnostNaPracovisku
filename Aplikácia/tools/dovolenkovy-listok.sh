@@ -23,7 +23,7 @@ done
 cd "$tmpdir"
 pdflatex -jobname "$jobname" -interaction batchmode -no-shell-escape \
     "$scriptdir/dovolenkovy-listok.tex" > /dev/null
-lp -h "$printer_host" -d "$printer" "$@" "$jobname.pdf" | \
+lp -h "$printer_host" -d "$printer" "$@" -- "$jobname.pdf" | \
     grep -o "$printer-[1-9][0-9]*"
 cd - > /dev/null
 rm -r "$tmpdir"
