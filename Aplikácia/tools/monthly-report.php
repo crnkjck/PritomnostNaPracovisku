@@ -22,7 +22,7 @@ $report_data = [
   "absences" => Overview::get_absences($year, $month)
 ];
 
-$jobname = preg_replace('/[^a-zA-Z0-9.]/', '-',
+$jobname = preg_replace('/[^a-zA-Z0-9.]/u', '-',
   sprintf("%04d-%02d-%s", $year, $month, $my_account->username)
 );
 list($tmpdir, $etc) = exec_or_die(
