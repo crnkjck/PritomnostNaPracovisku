@@ -24,7 +24,7 @@ a:focus { background-color: none !important; }
 
 .buttons { text-align: right; }
 button, input[type=button], input[type=submit] { font-family: inherit; font-size: inherit; border: none; padding: 0; margin: 0; }
-.button_submit { display: inline-block; background-color: #B3231B; margin-bottom: 20px; color: white; font-weight: bold; padding: 5px 15px; font-size: 15px; border-radius: 5px; box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.3); }
+.button_submit { display: inline-block; background-color: #B3231B; margin-bottom: 20px; color: white; font-weight: bold; padding: 5px 15px; font-size: 15px; border-radius: 5px; box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.3); text-transform: none; }
 .button_submit#empty_add, .button_submit.disabled { display: inline-block; background-color: #666; }
 .button_submit.add_absence { margin-top: 20px; }
 .button_print { margin: 0; }
@@ -157,6 +157,7 @@ footer .about { color: #FFBD43; float: right; cursor: pointer; }
 #overview_table > .title > span:last-of-type { margin-right: -10px; }
 #overview_table > .title:after { content: ''; display:block; height: 0; overflow: hidden; clear: right; }
 #overview_table > .title > .button_download { margin: -2px 0 -5px 25px; float: right; }
+.button_download .fa:first-child { margin-right: 0.16667em; }
 
 #overview_table > .box { box-shadow: inset 0px 0px 0px 2px rgb(216, 216, 216); margin: 15px 0px; padding: 0px 10px; font-size: 14px; color: #555; }
 #overview_table > .box > .title { background-color: #535250; color: #FFF; margin: 0px -10px; padding: 10px 15px; text-transform: uppercase; font-size: 16px; font-weight: bold; }
