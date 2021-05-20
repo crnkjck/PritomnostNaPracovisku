@@ -177,11 +177,12 @@ class OverviewSheetBuilder:
 
     def fill_in_sheet(self, employees, ws):
         prefix_re = re.compile('^' + self.personal_id_prefix)
+        nat_re = re.compile('^[0-9]+$')
         for row in range(self.FIRST_ROW, self.FIRST_ROW + self.ROWS_PER_SHEET):
             employee = next(employees)
+            short_id = prefix_re.sub('', str(employee['personal_id']))
             full_name = '{} {}'.format(employee['surname'], employee['name'])
-            ws.cell(row, 1).value = int(prefix_re.sub('',
-                str(employee['personal_id'])))
+            ws.cell(row, 1).value = int(short_id) if nat_re.match(short_id) else short_id
             ws.cell(row, 2).value = full_name
             (presence_days, absence_totals, categorize_manually) = \
                 self.fill_in_days(row, employee['id'], full_name, ws)
